@@ -6,6 +6,27 @@ import java.io.File;
 
 public class HandlingPDF {
 
+
+    public HandlingPDF(){}
+
+    public static String extractText(String dir){
+
+        String text = null;
+
+        try{
+            PDDocument document = PDDocument.load(new File(dir));
+            PDFTextStripper pdfStripper = new PDFTextStripper();
+            text = pdfStripper.getText(document);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return text;
+
+    }
+
+    /*
     public static void main(String[] args) {
 
         try{
@@ -18,5 +39,6 @@ public class HandlingPDF {
             e.printStackTrace();
         }
     }
+     */
 
 }

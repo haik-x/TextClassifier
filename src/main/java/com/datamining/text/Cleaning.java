@@ -39,7 +39,7 @@ public class Cleaning {
     }
 
     public static void main(String[] args) {
-        String str="The quick brown fox j$umped %over the lazy dog. The dog ba/7rked loudly in surprise, but the fox was already gone, disappearing into the nearby woods.";
+        String str="The quick brown fox j$umped %over the lazy dog. The dog's ba/7rked loudly in surprise, but the fox was already gone, disappearing into the nearby woods.";
 
 
         System.out.println(eraseStopWords(Tokenize(Cleaning(str))));

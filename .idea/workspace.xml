@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4d4ad05e-6243-4b63-9ffb-67497bb8cec6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/datamining/text/Cleaning.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/datamining/text/Stemming.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/datamining/text/Tokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/datamining/text/Tokenizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/datamining/text/Cleaning.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/datamining/text/Cleaning.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,9 +54,22 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Cleaning">
+  <component name="RunManager" selected="Application.Stemming">
     <configuration name="Cleaning" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.datamining.text.Cleaning" />
+      <module name="TextClassifier" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.datamining.text.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Stemming" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.datamining.text.Stemming" />
       <module name="TextClassifier" />
       <extension name="coverage">
         <pattern>
@@ -83,6 +96,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Stemming" />
         <item itemvalue="Application.Cleaning" />
         <item itemvalue="Application.Tokenizer" />
       </list>
@@ -97,27 +111,11 @@
       <option name="presentableId" value="Default" />
       <updated>1682794955491</updated>
       <workItem from="1682794956804" duration="9920000" />
-      <workItem from="1682808792455" duration="6165000" />
+      <workItem from="1682808792455" duration="12976000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/datamining/text/Cleaning.java</url>
-          <line>44</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/datamining/text/Cleaning.java</url>
-          <line>42</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4d4ad05e-6243-4b63-9ffb-67497bb8cec6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/datamining/text/Stemming.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/datamining/text/Cleaning.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/datamining/text/Cleaning.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/datamining/text/Stemming.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/datamining/text/Stemming.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +45,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -112,10 +112,26 @@
       <updated>1682794955491</updated>
       <workItem from="1682794956804" duration="9920000" />
       <workItem from="1682808792455" duration="12976000" />
+      <workItem from="1682980892500" duration="11875000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/datamining/text/Stemming.java</url>
+          <line>77</line>
+          <properties class="com.datamining.text.Stemming" method="step1b">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

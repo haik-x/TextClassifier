@@ -2,7 +2,7 @@ package com.datamining.text;
 
 public class Stemming {
     private static int wordLength;
-    private static StringBuilder wordM = new StringBuilder();
+    private static final StringBuilder wordM = new StringBuilder();
 
     public static final char[] VOWELS = {'a', 'e', 'i', 'o', 'u', 'y'};
 
@@ -37,9 +37,9 @@ public class Stemming {
     }
 
     private static String step1b(String word) {
-        if (word.endsWith("eed") && calculateM(word.substring(0,wordLength-3)) > 0) {wordLength -= 1; word = word.substring(0,wordLength);}
-        if (word.endsWith("ed") && containsVowel(word.substring(0,wordLength-2))) {wordLength -= 2;  word = word.substring(0,wordLength); word = step1bExtension(word);}
-        if (word.endsWith("ing") && containsVowel(word.substring(0,wordLength-3))) {wordLength -= 3;  word = word.substring(0,wordLength); word = step1bExtension(word);}
+        if (word.endsWith("eed") && calculateM(word.substring(0, wordLength - 3)) > 0) {wordLength -= 1; word = word.substring(0, wordLength);}
+        if (word.endsWith("ed") && containsVowel(word.substring(0, wordLength - 2))) {wordLength -= 2;  word = word.substring(0, wordLength); word = step1bExtension(word);}
+        if (word.endsWith("ing") && containsVowel(word.substring(0, wordLength - 3))) {wordLength -= 3;  word = word.substring(0, wordLength); word = step1bExtension(word);}
         return word;
     }
 
@@ -115,49 +115,49 @@ public class Stemming {
                 word = word.substring(0, wordLength - 5) + 'e';
             }
         }
-        else if(word.endsWith("ation")){
-            if( calculateM(word.substring(0,wordLength-6))> 0){
-                word=word.substring(0,wordLength-3)+'e';
+        else if (word.endsWith("ation")) {
+            if (calculateM(word.substring(0, wordLength - 6)) > 0){
+                word = word.substring(0, wordLength - 3) + 'e';
             }
         }
-        else if(word.endsWith("ator")){
-            if( calculateM(word.substring(0,wordLength-4))> 0){
-                word=word.substring(0,wordLength-2)+'e';
+        else if(word.endsWith("ator")) {
+            if (calculateM(word.substring(0, wordLength - 4)) > 0) {
+                word = word.substring(0,wordLength - 2) + 'e';
             }
         }
-        else if(word.endsWith("alism")){
-            if( calculateM(word.substring(0,wordLength-5))> 0){
-                word=word.substring(0,wordLength-3);
+        else if (word.endsWith("alism")) {
+            if (calculateM(word.substring(0, wordLength - 5)) > 0) {
+                word=word.substring(0, wordLength - 3);
             }
         }
-        else if(word.endsWith("iveness")){
-            if( calculateM(word.substring(0,wordLength-7))> 0){
-                word=word.substring(0,wordLength-4);
+        else if (word.endsWith("iveness")) {
+            if (calculateM(word.substring(0, wordLength - 7)) > 0) {
+                word = word.substring(0, wordLength - 4);
             }
         }
-        else if(word.endsWith("fulness")){
-            if( calculateM(word.substring(0,wordLength-7))> 0){
-                word=word.substring(0,wordLength-4);
+        else if (word.endsWith("fulness")) {
+            if (calculateM(word.substring(0,wordLength - 7)) > 0) {
+                word = word.substring(0, wordLength - 4);
             }
         }
-        else if(word.endsWith("ousness")){
-            if( calculateM(word.substring(0,wordLength-7))> 0){
-                word=word.substring(0,wordLength-4);
+        else if (word.endsWith("ousness")) {
+            if (calculateM(word.substring(0, wordLength - 7)) > 0) {
+                word = word.substring(0, wordLength - 4);
             }
         }
-        else if(word.endsWith("aliti")){
-            if( calculateM(word.substring(0,wordLength-6))> 0){
-                word=word.substring(0,wordLength-3);
+        else if (word.endsWith("aliti")) {
+            if (calculateM(word.substring(0, wordLength - 6)) > 0) {
+                word = word.substring(0, wordLength - 3);
             }
         }
-        else if(word.endsWith("iviti")){
-            if( calculateM(word.substring(0,wordLength-5))> 0){
-                word=word.substring(0,wordLength-3)+'e';
+        else if (word.endsWith("iviti")) {
+            if (calculateM(word.substring(0, wordLength - 5)) > 0) {
+                word = word.substring(0, wordLength - 3) +'e';
             }
         }
-        else if(word.endsWith("biliti")){
-            if( calculateM(word.substring(0,wordLength-6))> 0){
-                word=word.substring(0,wordLength-5)+"le";
+        else if (word.endsWith("biliti")) {
+            if (calculateM(word.substring(0, wordLength - 6)) > 0) {
+                word = word.substring(0, wordLength - 5) + "le";
             }
         }
         return word;
@@ -193,7 +193,8 @@ public class Stemming {
         else if (word.endsWith("ent") && calculateM(word.substring(0, wordLength - 3)) > 1)
             word = word.substring(0, wordLength - 3);
         else if (word.endsWith("ion") && !word.endsWith("l") && !word.endsWith("s") && !word.endsWith("z")
-                && calculateM(word.substring(0, wordLength - 3)) > 1) word = word.substring(0, wordLength - 3);
+                && calculateM(word.substring(0, wordLength - 3)) > 1)
+            word = word.substring(0, wordLength - 3);
         else if (word.endsWith("ou") && calculateM(word.substring(0, wordLength - 2)) > 1)
             word = word.substring(0, wordLength - 2);
         if ((word.endsWith("ism") ||
@@ -201,7 +202,8 @@ public class Stemming {
                 word.endsWith("iti") ||
                 word.endsWith("ous") ||
                 word.endsWith("ive") ||
-                word.endsWith("ize")) && calculateM(word.substring(0, wordLength - 3)) > 1) word = word.substring(0, wordLength - 3);
+                word.endsWith("ize")) && calculateM(word.substring(0, wordLength - 3)) > 1)
+            word = word.substring(0, wordLength - 3);
         wordLength = word.length();
         return word;
     }
@@ -231,27 +233,28 @@ public class Stemming {
         return false;
     }
 
-    private static boolean containsVowel(String word){
+    private static boolean containsVowel(String word) {
         for(int i = 0; i < word.length(); i++){
             if(isVowel(word.charAt(i))) return true;
         }
         return false;
     }
 
-    private static boolean isO(String word){
-        return wordM.charAt(wordLength-1) == 'C' && wordM.charAt(wordLength - 2) == 'V' && wordM.charAt(wordLength - 3) == 'C'
-                && word.charAt(wordLength-1) != 'w' &&  word.charAt(wordLength-1) != 'x' &&  word.charAt(wordLength-1) != 'y';
+    private static boolean isO(String word) {
+        return wordM.charAt(wordLength - 1) == 'C' && wordM.charAt(wordLength - 2) == 'V' && wordM.charAt(wordLength - 3) == 'C'
+                && word.charAt(wordLength-1) != 'w' &&  word.charAt(wordLength - 1) != 'x' &&  word.charAt(wordLength - 1) != 'y';
     }
-    private static int calculateM(String word){
+    private static int calculateM(String word) {
         int m = 0;
         wordM.delete(0, wordLength);
-        for(int i=0; i< word.length(); i++){
-            if(isVowel(word.charAt(i))) wordM.append('V');
+
+        for (int i = 0; i < word.length(); i++) {
+            if (isVowel(word.charAt(i))) wordM.append('V');
             else wordM.append('C');
         }
 
-        for(int i=0; i<word.length()-1; i++){
-            if(wordM.charAt(i) == 'V' && wordM.charAt(i+1) == 'C') m++;
+        for (int i = 0; i < word.length() - 1; i++) {
+            if(wordM.charAt(i) == 'V' && wordM.charAt(i + 1) == 'C') m++;
         }
         return m;
     }
@@ -261,9 +264,9 @@ public class Stemming {
     }
 
     private static String consonantY(String word) {
-        if(word.charAt(0)=='y')word='Y'+word.substring(1);
-        for (int i=1; i<word.length();i++){
-            if(word.charAt(i)=='y' && isVowel(word.charAt(i-1))) word = word.substring(0,i)+'Y'+word.substring(i+1);
+        if (word.charAt(0) == 'y') word = 'Y' + word.substring(1);
+        for (int i = 1; i < word.length(); i++) {
+            if (word.charAt(i) == 'y' && isVowel(word.charAt(i - 1))) word = word.substring(0, i) + 'Y' + word.substring(i + 1);
         }
         return word;
     }

@@ -97,8 +97,113 @@ public class Stemming {
     }
 
     private void step2(){
+        if(word.endsWith("ational")){
+           if( calculateM(word.substring(0,wordLength-7))> 0){
+               word=word.substring(0,wordLength-5)+'e';
+               wordLength=-4;
+
+           }
+        }
+        else if(word.endsWith("tional")){
+            if( calculateM(word.substring(0,wordLength-6))> 0){
+                word=word.substring(0,wordLength-2);
+                wordLength=-2;
+            }
+        }
+        else if(word.endsWith("enci")){
+            if( calculateM(word.substring(0,wordLength-4))> 0){
+                word=word.substring(0,wordLength-1)+'e';
+            }
+        }
+        else if(word.endsWith("anci")){
+            if( calculateM(word.substring(0,wordLength-4))> 0){
+                word=word.substring(0,wordLength-1)+'e';
+            }
+        }
+        else if(word.endsWith("izer")){
+            if( calculateM(word.substring(0,wordLength-4))> 0){
+                word=word.substring(0,wordLength-1);
+            }
+        }
+        else if(word.endsWith("abli")){
+            if( calculateM(word.substring(0,wordLength-4))> 0){
+                word=word.substring(0,wordLength-1)+'e';
+            }
+        }
+        else if(word.endsWith("alli")){
+            if( calculateM(word.substring(0,wordLength-4))> 0){
+                word=word.substring(0,wordLength-2);
+            }
+        }
+        else  if(word.endsWith("entli")){
+            if( calculateM(word.substring(0,wordLength-5))> 0){
+                word=word.substring(0,wordLength-2);
+            }
+        }
+        else if(word.endsWith("eli")){
+            if( calculateM(word.substring(0,wordLength-3))> 0){
+                word=word.substring(0,wordLength-2);
+            }
+        }
+        else if(word.endsWith("ousli")){
+            if( calculateM(word.substring(0,wordLength-5))> 0){
+                word=word.substring(0,wordLength-2);
+            }
+        }
+        else if(word.endsWith("ization")){
+            if( calculateM(word.substring(0,wordLength-7))> 0){
+                word=word.substring(0,wordLength-5)+'e';
+            }
+        }
+        else if(word.endsWith("ation")){
+            if( calculateM(word.substring(0,wordLength-6))> 0){
+                word=word.substring(0,wordLength-3)+'e';
+            }
+        }
+        else if(word.endsWith("ator")){
+            if( calculateM(word.substring(0,wordLength-4))> 0){
+                word=word.substring(0,wordLength-2)+'e';
+            }
+        }
+        else if(word.endsWith("alism")){
+            if( calculateM(word.substring(0,wordLength-5))> 0){
+                word=word.substring(0,wordLength-3);
+            }
+        }
+        else if(word.endsWith("iveness")){
+            if( calculateM(word.substring(0,wordLength-7))> 0){
+                word=word.substring(0,wordLength-4);
+            }
+        }
+        else if(word.endsWith("fulness")){
+            if( calculateM(word.substring(0,wordLength-7))> 0){
+                word=word.substring(0,wordLength-4);
+            }
+        }
+        else if(word.endsWith("ousness")){
+            if( calculateM(word.substring(0,wordLength-7))> 0){
+                word=word.substring(0,wordLength-4);
+            }
+        }
+        else if(word.endsWith("aliti")){
+            if( calculateM(word.substring(0,wordLength-6))> 0){
+                word=word.substring(0,wordLength-3);
+            }
+        }
+        else if(word.endsWith("iviti")){
+            if( calculateM(word.substring(0,wordLength-5))> 0){
+                word=word.substring(0,wordLength-3)+'e';
+            }
+        }
+        else if(word.endsWith("biliti")){
+            if( calculateM(word.substring(0,wordLength-6))> 0){
+                word=word.substring(0,wordLength-5)+"le";
+            }
+        }
 
     }
+
+
 
     private boolean containsVowel(String word){
         for(int i = 0; i < word.length(); i++){
@@ -111,19 +216,19 @@ public class Stemming {
         return wordM.charAt(wordLength-1) == 'C' && wordM.charAt(wordLength - 2) == 'V' && wordM.charAt(wordLength - 3) == 'C'
                 && word.charAt(wordLength-1) != 'w' &&  word.charAt(wordLength-1) != 'x' &&  word.charAt(wordLength-1) != 'y';
     }
-    private int calculateM(String word){
+    private int calculateM(String word1){
 
         int m = 0;
 
 
         wordLength = word.length();
 
-        for(int i=0; i< wordLength; i++){
-            if(isVowel(word.charAt(i))) wordM.append('V');
+        for(int i=0; i< word1.length(); i++){
+            if(isVowel(word1.charAt(i))) wordM.append('V');
             else wordM.append('C');
         }
 
-        for(int i=0; i<wordLength-1; i++){
+        for(int i=0; i<word1.length()-1; i++){
             if(wordM.charAt(i) == 'V' && wordM.charAt(i+1) == 'C') m++;
         }
 
@@ -133,9 +238,13 @@ public class Stemming {
 
     public static void main(String[] args) {
         Stemming a=new Stemming();
-        a.word="hoping";
+        a.word="Technicalli";
+
+
+
         a.step1a();
         a.step1b();
+        a.step2();
         System.out.println(a.word);
     }
 

@@ -57,6 +57,7 @@ public class Stemming {
 
     }
 
+
     private void step1a(){
 
         calculateM(word);
@@ -80,9 +81,6 @@ public class Stemming {
         if(word.endsWith("eed") && calculateM(word.substring(0,wordLength-3)) > 0) {wordLength -= 1; word = word.substring(0,wordLength);}
         if(word.endsWith("ed") && containsVowel(word.substring(0,wordLength-2))) {wordLength -= 2;  word = word.substring(0,wordLength);  step1bExtension();;}
         if(word.endsWith("ing") && containsVowel(word.substring(0,wordLength-3))) {wordLength -= 3;  word = word.substring(0,wordLength);  step1bExtension();}
-
-
-
 
     }
 
@@ -203,6 +201,34 @@ public class Stemming {
 
     }
 
+    private void step4() {
+        if (word.endsWith("al") && calculateM(word.substring(0, wordLength - 2)) > 1)
+            word = word.substring(0, wordLength - 2);
+        else if ((word.endsWith("ance") || word.endsWith("ence")) && calculateM(word.substring(0, wordLength - 4)) > 1)
+            word = word.substring(0, wordLength - 4);
+        else if ((word.endsWith("er") || word.endsWith("ic")) && calculateM(word.substring(0, wordLength - 2)) > 1)
+            word = word.substring(0, wordLength - 2);
+        else if ((word.endsWith("able") || word.endsWith("ible")) && calculateM(word.substring(0, wordLength - 4)) > 1)
+            word = word.substring(0, wordLength - 4);
+        else if (word.endsWith("ant") && calculateM(word.substring(0, wordLength - 3)) > 1)
+            word = word.substring(0, wordLength - 3);
+        else if (word.endsWith("ement") && calculateM(word.substring(0, wordLength - 5)) > 1)
+            word = word.substring(0, wordLength - 5);
+        else if (word.endsWith("ment") && calculateM(word.substring(0, wordLength - 4)) > 1)
+            word = word.substring(0, wordLength - 4);
+        else if (word.endsWith("ent") && calculateM(word.substring(0, wordLength - 3)) > 1)
+            word = word.substring(0, wordLength - 3);
+        else if (word.endsWith("ion") && !word.endsWith("l") && !word.endsWith("s") && !word.endsWith("z")
+                && calculateM(word.substring(0, wordLength - 3)) > 1) word = word.substring(0, wordLength - 3);
+        else if (word.endsWith("ou") && calculateM(word.substring(0, wordLength - 2)) > 1)
+            word = word.substring(0, wordLength - 2);
+        if ((word.endsWith("ism") ||
+                word.endsWith("ate") ||
+                word.endsWith("iti") ||
+                word.endsWith("ous") ||
+                word.endsWith("ive") ||
+                word.endsWith("ize")) && calculateM(word.substring(0, wordLength - 3)) > 1) word = word.substring(0, wordLength - 3);
+    }
 
 
     private boolean containsVowel(String word){
@@ -239,8 +265,6 @@ public class Stemming {
     public static void main(String[] args) {
         Stemming a=new Stemming();
         a.word="Technicalli";
-
-
 
         a.step1a();
         a.step1b();

@@ -21,25 +21,34 @@ public class Cleaning {
             "who's", "whom", "why", "why's", "with", "won't", "would", "wouldn't", "you", "you'd", "you'll", "you're", "you've", "your", "yours",
             "yourself", "yourselves"};
 
-    public static String Cleaning(String str) {
-        String str2 = str.replaceAll("[^\\w\\s]+", "").replaceAll("[^\\p{L}\\s]+", "").toLowerCase();
-        return str2;
+    public static ArrayList<String> clean(String str) {
+        return eraseStopWords(tokenize(cleaning(str)));
     }
-    public  static ArrayList<String> Tokenize(String str) {
+
+    private static String cleaning(String str) {
+        // Remove every non-letter and non-space
+
+        return str.replaceAll("[^\\p{L}\\s]+", "").toLowerCase();
+    }
+
+    private static ArrayList<String> tokenize(String str) {
+        // Split the text into an ArrayList containing words
+
         Splitter splitter = Splitter.on(' ').omitEmptyStrings().trimResults();
         Iterable<String> words = splitter.split(str);
         return Lists.newArrayList(words);
     }
 
-    public static ArrayList<String> eraseStopWords(ArrayList<String> str) {
-        List<String> stop = Arrays.asList(STOP_WORDS);
-        boolean str2 = str.removeAll(stop);
+    private static ArrayList<String> eraseStopWords(ArrayList<String> str) {
+        // Erase Stop Words (not relevant words) from the ArrayList
 
+        List<String> stop = Arrays.asList(STOP_WORDS);
+        str.removeAll(stop);
         return str;
     }
 
     public static void main(String[] args) {
         String str="The quick brown fox j$umped %over the lazy dog. The dog's ba/7rked loudly in surprise, but the fox was already gone, disappearing into the nearby woods.";
-        System.out.println(eraseStopWords(Tokenize(Cleaning(str))));
+        System.out.println(clean(str));
     }
 }

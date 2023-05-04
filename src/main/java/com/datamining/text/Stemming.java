@@ -2,7 +2,7 @@ package com.datamining.text;
 
 public class Stemming {
     private static int wordLength;
-    private static StringBuilder wordM = new StringBuilder();
+    private static final StringBuilder wordM = new StringBuilder();
 
     public static final char[] VOWELS = {'a', 'e', 'i', 'o', 'u', 'y'};
 
@@ -20,7 +20,6 @@ public class Stemming {
         stemmedWord = step5b(stemmedWord);
         return stemmedWord.toLowerCase();
     }
-
 
     private static String step1a(String word) {
         if (word.endsWith("s")) {
@@ -269,15 +268,6 @@ public class Stemming {
     }
 
     public static void main(String[] args) {
-        System.out.println(stem("fertilizer"));
+        System.out.println(stem("Accident"));
     }
-
-
-
-
-
-
-
-
-
 }

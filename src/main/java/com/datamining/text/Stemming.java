@@ -21,7 +21,6 @@ public class Stemming {
         return stemmedWord.toLowerCase();
     }
 
-
     private static String step1a(String word) {
         if (word.endsWith("s")) {
             if (word.endsWith("sses")) wordLength -= 2;
@@ -272,15 +271,6 @@ public class Stemming {
     }
 
     public static void main(String[] args) {
-        System.out.println(stem("fertilizer"));
+        System.out.println(stem("Accident"));
     }
-
-
-
-
-
-
-
-
-
 }

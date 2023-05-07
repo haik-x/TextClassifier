@@ -1,13 +1,11 @@
 package com.datamining.text;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 import static com.datamining.text.Stemming.stem;
 
 public class StemText {
-    public static HashMap<String, Integer> stemText(ArrayList<String> words) {
+    public static TreeMap<String, Integer> stemText(ArrayList<String> words) {
         /*
             Given a list of words, create two maps to store <word, stem> and <stem, count>
             The first stores non-repeated words and their stem, while the second counts
@@ -16,6 +14,7 @@ public class StemText {
 
         HashMap<String, String> wordStemMap = new HashMap<>();
         HashMap<String, Integer> stemCountMap = new HashMap<>();
+
 
         for (String word:words) {
             if (!wordStemMap.containsKey(word)) {   // The word hasn't appeared already
@@ -32,13 +31,25 @@ public class StemText {
                 stemCountMap.replace(stemKey, stemCountMap.get(stemKey) + 1);
             }
         }
-        return stemCountMap;
+        return valueSort(stemCountMap);
     }
 
-    public static void main(String[] args) {
-        ArrayList<String> test = new ArrayList<>();
-        Collections.addAll(test, "Accidentally", "Accident", "Accidentally",  "Exaggeration", "Indefatigable", "Ineffable", "Inevitability", "Irrevocable", "Magnanimous", "Multifarious", "Perpetuity", "Philanthropic", "Propensity", "Quintessence", "Remonstrance", "Serendipitous", "Supercilious", "Transcendental", "Ubiquitous", "Vociferous", "Consistent", "Consisting", "Consistency", "Consists");
-        System.out.println(test);
-        System.out.println(stemText(test));
+    private static <String, Integer extends Comparable<Integer>> TreeMap<String, Integer> valueSort(Map<String, Integer> map) {
+        /*
+            Override compare method so that TreeMap is ordered by value instead of key
+         */
+        Comparator<String> valueComparator = new Comparator<String>() {
+            @Override
+            public int compare(String word1, String word2) {
+                int comp = map.get(word2).compareTo(map.get(word1));
+                if (comp == 0)
+                    return 1;
+                else
+                    return comp;
+            }
+        };
+        TreeMap<String, Integer> sorted = new TreeMap<>(valueComparator);
+        sorted.putAll(map);
+        return sorted;
     }
 }

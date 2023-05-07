@@ -44,10 +44,10 @@ public class Stemming {
 
     private static String step1bExtension(String word) {
         if (word.endsWith("at") || word.endsWith("bl") || word.endsWith("iz")) {word = word.concat("e"); wordLength++;}
-        if (endsInDoubleConsonant(word)) {
+        else if (endsInDoubleConsonant(word)) {
             if (!word.endsWith("l") && !word.endsWith("s") && !word.endsWith("z")) {wordLength--; word = word.substring(0, wordLength);}
         }
-        if (calculateM(word) == 1 && isO(word)) {word = word.concat("e"); wordLength++;}
+        else if (calculateM(word) == 1 && isO(word)) {word = word.concat("e"); wordLength++;}
         return word;
     }
 
@@ -240,6 +240,7 @@ public class Stemming {
     }
 
     private static boolean isO(String word) {
+        if (wordLength < 3) return false;
         return wordM.charAt(wordLength - 1) == 'C' && wordM.charAt(wordLength - 2) == 'V' && wordM.charAt(wordLength - 3) == 'C'
                 && word.charAt(wordLength-1) != 'w' &&  word.charAt(wordLength - 1) != 'x' &&  word.charAt(wordLength - 1) != 'y';
     }
@@ -271,6 +272,6 @@ public class Stemming {
     }
 
     public static void main(String[] args) {
-        System.out.println(stem("Accident"));
+        System.out.println(stem("adding"));
     }
 }

@@ -27,7 +27,7 @@ public class Stemming {
             if (word.endsWith("ies")) {
                 if (wordLength == 4) wordLength -= 1;
                 else wordLength -= 2;
-            } else if (wordLength > 3 && word.charAt(wordLength-2) != 's' && word.charAt(wordLength-2) != 'u' && word.charAt(wordLength-2) != 'x'
+            } else if (wordLength > 3 && word.charAt(wordLength - 2) != 's' && word.charAt(wordLength - 2) != 'u' && word.charAt(wordLength - 2) != 'x'
                     && (word.charAt(wordLength-2) != 'i')) {
                 wordLength --;
             }
@@ -159,6 +159,7 @@ public class Stemming {
                 word = word.substring(0, wordLength - 5) + "le";
             }
         }
+        wordLength = word.length();
         return word;
     }
 
@@ -208,8 +209,8 @@ public class Stemming {
     }
 
     private static String step5a(String word) {
-        if (word.endsWith("E")) {
-            if (calculateM(word) > 1 || (calculateM(word.substring(0, wordLength - 1)) == 1 && !isO(word))) {
+        if (word.endsWith("e")) {
+            if (calculateM(word.substring(0, wordLength - 1)) > 1 || (calculateM(word.substring(0, wordLength - 1)) == 1 && !isO(word.substring(0, wordLength - 1)))) {
                 word = word.substring(0, wordLength - 1);
                 wordLength = word.length();
             }
@@ -240,13 +241,15 @@ public class Stemming {
     }
 
     private static boolean isO(String word) {
-        if (wordLength < 3) return false;
-        return wordM.charAt(wordLength - 1) == 'C' && wordM.charAt(wordLength - 2) == 'V' && wordM.charAt(wordLength - 3) == 'C'
-                && word.charAt(wordLength-1) != 'w' &&  word.charAt(wordLength - 1) != 'x' &&  word.charAt(wordLength - 1) != 'y';
+        int length = word.length();
+        if (length < 3) return false;
+        return wordM.charAt(length - 1) == 'C' && wordM.charAt(length - 2) == 'V' && wordM.charAt(length - 3) == 'C'
+                && word.charAt(length-1) != 'w' &&  word.charAt(length - 1) != 'x' &&  word.charAt(length - 1) != 'y';
     }
     private static int calculateM(String word) {
         int m = 0;
         wordM.delete(0, wordLength);
+        wordM.setLength(0);
 
         for (int i = 0; i < word.length(); i++) {
             if (isVowel(word.charAt(i))) wordM.append('V');
@@ -260,7 +263,9 @@ public class Stemming {
     }
 
     private static boolean endsInDoubleConsonant(String word) {
-        return !isVowel(word.charAt(word.length() - 1)) && word.charAt(word.length() - 1) == word.charAt(word.length() - 2);
+        if (wordLength > 2)
+            return !isVowel(word.charAt(word.length() - 1)) && word.charAt(word.length() - 1) == word.charAt(word.length() - 2);
+        return false;
     }
 
     private static String consonantY(String word) {

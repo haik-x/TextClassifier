@@ -1,8 +1,16 @@
 package com.datamining.classifier;
-
 import java.util.*;
 
+import static com.datamining.classifier.Methods.*;
+
 public class Classifier {
+
+    public static String classifyText(String path, Methods method, int k) {
+//        switch (method) {
+//            case METHOD1 ->
+//        }
+        return "";
+    }
 
     public static PriorityQueue<WordFrequency> intoQueue(TreeMap<String, Integer> stemCountMap) {
         PriorityQueue<WordFrequency> frequencyQueue = new PriorityQueue<>();
@@ -18,4 +26,17 @@ public class Classifier {
         }
         return frequencyQueue;
     }
+
+//    private static double getDistance(PriorityQueue<WordFrequency> queue1, PriorityQueue<WordFrequency> queue2, Methods methods) {
+//        switch (methods) {
+//            case METHOD1 ->
+//        }
+//    }
+//
+//    private static double[] method1(PriorityQueue<WordFrequency> userText) {
+//
+//    }
+
+
+
 }

@@ -1,7 +1,7 @@
 package com.datamining.training;
 
 import com.datamining.classifier.WordFrequency;
-import static com.datamining.classifier.Classifier.intoQueue;
+import static com.datamining.classifier.Classifier.intoArrayList;
 import static com.datamining.text.Cleaning.clean;
 import static com.datamining.text.StemText.stemText;
 
@@ -42,7 +42,7 @@ public class Training {
                     while (Reader.hasNextLine()) {
                         data.append(Reader.nextLine()).append(" ");
                     }
-                    PriorityQueue<WordFrequency> queue = new PriorityQueue<>(intoQueue(stemText(clean(data.toString()))));
+                    PriorityQueue<WordFrequency> queue = new PriorityQueue<>(intoArrayList(stemText(clean(data.toString()))));
                     writer.write(queue + "\n");
                     Reader.close();
                 } catch (IOException e) {

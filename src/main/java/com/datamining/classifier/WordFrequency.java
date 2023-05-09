@@ -17,12 +17,6 @@ public class WordFrequency implements Comparable<WordFrequency> {
             return -1;
         return 0;
     }
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof WordFrequency wf)
-            return this.word.equals(wf.word);
-        return false;
-    }
 
     @Override
     public boolean equals(Object obj) {

@@ -1,5 +1,6 @@
 package com.datamining.classifier;
 import java.util.*;
+import java.awt.*;
 
 import static com.datamining.classifier.Methods.*;
 import static com.datamining.text.Cleaning.clean;

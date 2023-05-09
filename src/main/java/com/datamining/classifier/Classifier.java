@@ -1,16 +1,15 @@
 package com.datamining.classifier;
+import java.awt.*;
 import java.util.*;
+import com.datamining.classifier.Labels;
 import static com.datamining.text.Cleaning.clean;
 import static com.datamining.text.StemText.stemText;
 
 public class Classifier {
 
-    public static String classifyText(String path, Methods method, int k) {
-//        switch (method) {
-//            case METHOD1 ->
-//        }
-        return "";
-    }
+//    public static Labels classifyText(String path, Methods method, int k) {
+//        return Labe
+//    }
 
     public static ArrayList<WordFrequency> intoArrayList(TreeMap<String, Integer> stemCountMap) {
         ArrayList<WordFrequency> frequencyArray = new ArrayList<>();
@@ -26,16 +25,6 @@ public class Classifier {
         }
         return frequencyArray;
     }
-
-//    private static double getDistance(PriorityQueue<WordFrequency> queue1, PriorityQueue<WordFrequency> queue2, Methods methods) {
-//        switch (methods) {
-//            case METHOD1 ->
-//        }
-//    }
-//
-//    private static double[] method1(PriorityQueue<WordFrequency> userText) {
-//
-//    }
 
     private static double manhattanDistance(ArrayList<WordFrequency> userText,ArrayList<WordFrequency> baseText){
         double totaldistance=0;
@@ -116,6 +105,4 @@ public class Classifier {
         }
         return distance;
     }
-
-
 }

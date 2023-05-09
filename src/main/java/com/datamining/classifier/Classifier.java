@@ -4,7 +4,8 @@ import java.util.*;
 import static com.datamining.text.Cleaning.clean;
 import static com.datamining.text.StemText.stemText;
 
-import static com.datamining.classifier.Methods.*;
+import static com.datamining.text.Cleaning.clean;
+import static com.datamining.text.StemText.stemText;
 
 public class Classifier {
 
@@ -82,5 +83,24 @@ public class Classifier {
     }
 
 
+    private static double euclidean(ArrayList<WordFrequency> userText, ArrayList<WordFrequency> baseText) {
+        double distance = 0;
+
+        for (int userTextIndex = 0; userTextIndex < userText.size(); userTextIndex++) {
+            WordFrequency word = userText.get(userTextIndex);
+            if (baseText.contains(word)) {
+                int baseTextIndex = baseText.indexOf(word);
+
+                distance += Math.pow((word.frequency + (userTextIndex * 0.01)) - (baseText.get(baseTextIndex).frequency + (baseTextIndex * 0.01)), 2);
+
+            } else {
+                distance++;
+            }
+        }
+        return Math.sqrt(distance);
+    }
+
+    public static void main(String[] args) {
+    }
 
 }

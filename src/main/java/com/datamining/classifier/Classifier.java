@@ -1,9 +1,5 @@
 package com.datamining.classifier;
-import java.awt.*;
 import java.util.*;
-import static com.datamining.text.Cleaning.clean;
-import static com.datamining.text.StemText.stemText;
-
 import static com.datamining.text.Cleaning.clean;
 import static com.datamining.text.StemText.stemText;
 
@@ -100,7 +96,26 @@ public class Classifier {
         return Math.sqrt(distance);
     }
 
-    public static void main(String[] args) {
+    private  static double cosineDistance(ArrayList<WordFrequency> userText, ArrayList<WordFrequency> baseText) {
+
+        double distance = 0;
+
+        for(int i = 0; i < baseText.size();i++){
+            WordFrequency wd = baseText.get(i);
+            if(userText.contains(wd)){
+                double userFreq = userText.get(userText.indexOf(wd)).frequency;
+                double userIndex = userText.indexOf(wd)+1 * 0.01;
+                distance +=
+                        (((userIndex*wd.frequency)+((i+1)*0.01*userFreq))) /
+                                ((Math.sqrt((wd.frequency*wd.frequency)+(((i+1)*0.01)*((i+1)*0.1)))+
+                                        Math.sqrt((userFreq*userFreq)+(userIndex*userIndex))));
+            }
+            else{
+                distance += 1;
+            }
+        }
+        return distance;
     }
+
 
 }

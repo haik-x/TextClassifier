@@ -8,6 +8,10 @@ public class WordFrequency implements Comparable<WordFrequency> {
         this.word = word;
         this.frequency = count / (total * 1.0);
     }
+    public WordFrequency(String word, double frequency) {
+        this.word = word;
+        this.frequency = frequency;
+    }
 
     @Override
     public int compareTo(WordFrequency wf) {

@@ -1,13 +1,19 @@
 package com.datamining.classifier;
 
 public enum Labels {
-    ENTERTAINMENT("Entertainment"), POLITICS("Politics"), SPORTS("Sports");
+    ENTERTAINMENT("Entertainment",0), POLITICS("Politics",1), SPORTS("Sports",2);
 
     private final String label;
-    private Labels(String label) {
-        this.label = label;
+    private final int index;
+    private Labels(String label, int index) {
+        this.label = label; this.index=index;
     }
     public String toString() {
         return this.label;
     }
+
+    public int getIndex() {
+        return index;
+    }
 }
+

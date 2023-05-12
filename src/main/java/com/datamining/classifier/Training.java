@@ -1,6 +1,6 @@
 package com.datamining.classifier;
 
-import static com.datamining.classifier.Classifier.DOCS_PER_LABEL;
+import static com.datamining.classifier.Classifier.TEXTS_PER_LABEL;
 import static com.datamining.classifier.Classifier.intoArrayList;
 import static com.datamining.text.Cleaning.clean;
 import static com.datamining.text.StemText.stemText;
@@ -24,7 +24,7 @@ public class Training {
                 throw new RuntimeException(e);
             }
 
-            for (int i = 1; i <= DOCS_PER_LABEL; i++) {
+            for (int i = 1; i <= TEXTS_PER_LABEL; i++) {
                 try {
                     File file = new File("dataset\\Label\\" + label + "\\" + label.toString().toLowerCase() + i + ".txt").getAbsoluteFile();
                     Scanner Reader = new Scanner(file);

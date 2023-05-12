@@ -4,10 +4,20 @@ public class WordFrequency implements Comparable<WordFrequency> {
     public String word;
     public double frequency;
 
+    /**
+     * @param word Stemmed word
+     * @param count Number of appereances of the stemmed word in the text
+     * @param total Total of stems in the text
+     */
     public WordFrequency(String word, int count, int total) {
         this.word = word;
         this.frequency = count / (total * 1.0);
     }
+
+    /**
+     * @param word Stemmed word
+     * @param frequency Frequency of appereance in the text
+     */
     public WordFrequency(String word, double frequency) {
         this.word = word;
         this.frequency = frequency;

@@ -2,10 +2,18 @@ package com.datamining.text;
 
 public class Stemming {
     private static int wordLength;
+    /**
+     * The representation of the word as consonant C or vowel V
+     */
     private static final StringBuilder wordM = new StringBuilder();
 
     public static final char[] VOWELS = {'a', 'e', 'i', 'o', 'u', 'y'};
 
+    /**
+     * Applies the stemming rules to a word
+     * @param word Word that is going to be stemmed
+     * @return Stem of the provided word
+     */
     public static String stem(String word) {
         String stemmedWord = word;
         wordLength = word.length();
@@ -226,6 +234,11 @@ public class Stemming {
         return word;
     }
 
+    /**
+     * Check if a letter is a vowel
+     * @param letter A single letter
+     * @return true if the letter is a vowel, false if not
+     */
     private static boolean isVowel(char letter) {
         for (char vowel:VOWELS) {
             if(letter == vowel) return true;
@@ -240,12 +253,23 @@ public class Stemming {
         return false;
     }
 
+    /**
+     * Checks if the word ends in Consonant-Vowel-Consonant
+     * @param word Word that is going to be checked
+     * @return true if ends in CVC and the last letter is neither w, x nor y
+     */
     private static boolean isO(String word) {
         int length = word.length();
         if (length < 3) return false;
         return wordM.charAt(length - 1) == 'C' && wordM.charAt(length - 2) == 'V' && wordM.charAt(length - 3) == 'C'
                 && word.charAt(length-1) != 'w' &&  word.charAt(length - 1) != 'x' &&  word.charAt(length - 1) != 'y';
     }
+
+    /**
+     * Calculate the m value of a word and update the value of the wordM variable
+     * @param word The word to calculate its m value
+     * @return m value of the word
+     */
     private static int calculateM(String word) {
         int m = 0;
         wordM.delete(0, wordLength);
@@ -274,9 +298,5 @@ public class Stemming {
             if (word.charAt(i) == 'y' && isVowel(word.charAt(i - 1))) word = word.substring(0, i) + 'Y' + word.substring(i + 1);
         }
         return word;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(stem("adding"));
     }
 }

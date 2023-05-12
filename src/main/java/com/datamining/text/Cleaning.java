@@ -21,34 +21,42 @@ public class Cleaning {
             "who's", "whom", "why", "why's", "will", "with", "won't", "would", "wouldn't", "you", "you'd", "you'll", "you're", "you've", "your", "yours",
             "yourself", "yourselves", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "zero", "ten"};
 
+    /**
+     * @param str The text to clean as a String
+     * @return ArrayList containing each word found in the text
+     */
     public static ArrayList<String> clean(String str) {
         return eraseStopWords(tokenize(cleaning(str)));
     }
 
+    /**
+     * Removes every non-letter and non-space
+     * @param str The text to clean as a String
+     * @return The text as a String without any special characters or number
+     */
     private static String cleaning(String str) {
-        // Remove every non-letter and non-space
-
         return str.replaceAll("\n", " ").replaceAll("[^\\w\\s]+", "").replaceAll("[^\\p{L}\\s]+", "").toLowerCase();
     }
 
+    /**
+     * Splits the text into an ArrayList containing words
+     * @param str The text as a String after going through the clean method
+     * @return ArrayList of the words contained in str
+     */
     private static ArrayList<String> tokenize(String str) {
-        // Split the text into an ArrayList containing words
-
         Splitter splitter = Splitter.on(' ').omitEmptyStrings().trimResults();
         Iterable<String> words = splitter.split(str);
         return Lists.newArrayList(words);
     }
 
+    /**
+     * Erases stopwords from the ArrayList
+     * @param str ArrayList of words obtained from the tokenize method
+     * @return ArrayList of every non-stopword found in the str ArrayList
+     */
     private static ArrayList<String> eraseStopWords(ArrayList<String> str) {
-        // Erase Stop Words (not relevant words) from the ArrayList
-
         List<String> stop = Arrays.asList(STOP_WORDS);
         str.removeAll(stop);
         return str;
-    }
-
-    public static void main(String[] args) {
-        String str="The quick brown fox j$umped %over the lazy dog. The dog's ba/7rked loudly in surprise, but the fox was already gone, disappearing into the nearby woods.";
-        System.out.println(clean(str));
     }
 }

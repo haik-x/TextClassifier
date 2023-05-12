@@ -5,16 +5,14 @@ import java.util.*;
 import static com.datamining.text.Stemming.stem;
 
 public class StemText {
+    /**
+     *
+     * @param words ArrayList of stemmed words
+     * @return TreeMap containing a stem and the count of appeareances. Sorted by count
+     */
     public static TreeMap<String, Integer> stemText(ArrayList<String> words) {
-        /*
-            Given a list of words, create two maps to store <word, stem> and <stem, count>
-            The first stores non-repeated words and their stem, while the second counts
-            how many times a stem appears
-         */
-
         HashMap<String, String> wordStemMap = new HashMap<>();
         HashMap<String, Integer> stemCountMap = new HashMap<>();
-
 
         for (String word:words) {
             if (!wordStemMap.containsKey(word)) {   // The word hasn't appeared already

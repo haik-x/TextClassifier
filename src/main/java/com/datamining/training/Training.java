@@ -11,7 +11,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Training {
-    public static final int docsPerLabel = 3;
+    /**
+     * The number of base texts stored per label
+     */
+    public static final int DOCS_PER_LABEL = 3;
+
     private static void createArrays() {
         for (Labels label: Labels.values()) {
             File arraysFile;
@@ -26,7 +30,7 @@ public class Training {
                 throw new RuntimeException(e);
             }
 
-            for (int i = 1; i <= docsPerLabel; i++) {
+            for (int i = 1; i <= DOCS_PER_LABEL; i++) {
                 try {
                     File file = new File("dataset\\Label\\" + label + "\\" + label.toString().toLowerCase() + i + ".txt").getAbsoluteFile();
                     Scanner Reader = new Scanner(file);
@@ -49,9 +53,4 @@ public class Training {
             }
         }
     }
-
-    public static void main(String[] args) {
-        createArrays();
-    }
-
 }

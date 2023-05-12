@@ -14,7 +14,12 @@ public enum Labels {
     /**
      * Sports label
      */
-    SPORTS("Sports",2);
+    SPORTS("Sports",2),
+
+    /**
+     * Science label
+     */
+    SCIENCE("Science", 3);
 
     private final String label;
     private final int index;
@@ -40,6 +45,7 @@ public enum Labels {
             case 0 -> ENTERTAINMENT;
             case 1 -> POLITICS;
             case 2 -> SPORTS;
+            case 3 -> SCIENCE;
             default -> throw new IllegalStateException("Unexpected value: " + index);
         };
     }

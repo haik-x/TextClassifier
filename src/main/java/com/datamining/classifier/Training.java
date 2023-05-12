@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Training {
-    private static void createArrays() {
+    private static void train() {
         for (Labels label: Labels.values()) {
             File arraysFile;
             FileWriter writer;
@@ -46,5 +46,9 @@ public class Training {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public static void main(String[] args) {
+        train();
     }
 }

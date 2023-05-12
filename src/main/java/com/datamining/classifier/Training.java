@@ -1,7 +1,6 @@
-package com.datamining.training;
+package com.datamining.classifier;
 
-import com.datamining.classifier.Labels;
-import com.datamining.classifier.WordFrequency;
+import static com.datamining.classifier.Classifier.DOCS_PER_LABEL;
 import static com.datamining.classifier.Classifier.intoArrayList;
 import static com.datamining.text.Cleaning.clean;
 import static com.datamining.text.StemText.stemText;
@@ -11,11 +10,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Training {
-    /**
-     * The number of base texts stored per label
-     */
-    public static final int DOCS_PER_LABEL = 3;
-
     private static void createArrays() {
         for (Labels label: Labels.values()) {
             File arraysFile;

@@ -4,54 +4,77 @@ import java.util.*;
 
 import static com.datamining.text.Cleaning.clean;
 import static com.datamining.text.StemText.stemText;
+import static com.datamining.classifier.Labels.intoLabel;
 
 public class Classifier {
+    /**
+     * The number of base texts stored per label
+     */
     private final static int DOCS_PER_LABEL = 3;
 
+    /**
+     * @param userText text to classify provided by the user
+     * @param method Preferred method to calculate distance
+     * @param k The k-nearest base texts used to decide the classification
+     *
+     * @return String containing the name of the calculated label for the userText
+    */
+    public static String classifyText(String userText, Methods method, int k) {
+        ArrayList<ArrayList<WordFrequency>> data = extractBaseData();
+        ArrayList<WordFrequency> userStemmedText = intoArrayList(stemText(clean(userText)));
+        Queue<DistanceLabel> knnPlane = new PriorityQueue<>();
+        int labelIndex = 0;
 
- public static Labels classifyText(String userText, Methods method, int k) {
-//        return Labe
-//    For each method para encontrar que metodo usar break
-//    GetDistance(Array 1 2, Method)
-     ArrayList<ArrayList<WordFrequency>> data=ArrayOfArrays();
-     ArrayList<WordFrequency> userStemmedText=intoArrayList(stemText(clean(userText)));
-     Queue<DistanceLabel> knnPlane= new PriorityQueue<>();
-     int labelIndex=0;
-     for (Labels label:Labels.values()) {
-        for (int i=0; i<DOCS_PER_LABEL;i++){
-            double distance = getDistance(userStemmedText,data.get(i+(labelIndex*DOCS_PER_LABEL)), method);
-           knnPlane.add(new DistanceLabel(distance, label));
+        for (Labels label:Labels.values()) {
+            for (int i = 0; i < DOCS_PER_LABEL; i++) {
+                double distance = getDistance(userStemmedText, data.get(i + (labelIndex*DOCS_PER_LABEL)), method);
+                knnPlane.add(new DistanceLabel(distance, label));
+            }
+            labelIndex++;
         }
-         labelIndex++;
-     }
-     ArrayList<Integer>labelCount= new ArrayList<>();
-     for (Labels l:Labels.values()) {
-         labelCount.add(l.getIndex(),0);
-     }
-     for (int i=0; i<k ;i++){
-         DistanceLabel dl=knnPlane.poll();
-         Integer value= labelCount.get(dl.label.getIndex());
-         value=value==null?0:value+1;
-         labelCount.set(dl.label.getIndex(),value);
-     }
 
-     System.out.println(labelCount);
+        ArrayList<Integer>labelCount = new ArrayList<>();
+        for (Labels l:Labels.values()) {
+            labelCount.add(l.getIndex(), 0);
+        }
 
-     return Labels.POLITICS;
+        for (int i = 0; i < k; i++) {
+            DistanceLabel dl=knnPlane.poll();
+            Integer value = labelCount.get(dl.label.getIndex());
+            value = value == null ? 0:value + 1;
+            labelCount.set(dl.label.getIndex(), value);
+        }
+
+        System.out.println(labelCount);
+
+        return getMaxLabel(labelCount).toString();
    }
+
+    /**
+     Filters into the mehtod chosen by the user
+     @param userText Text provided by the user
+     @param baseText Current base text to compare to
+     @param method   Preferred method chosen by the user
+
+     @return Distance between userText and baseText
+     */
    private static double getDistance(ArrayList<WordFrequency> userText, ArrayList<WordFrequency>baseText, Methods method) {
-     double distance;
-       switch (method) {
-           case EUCLIDEAN->distance=euclideanDistance(userText,baseText);
-           case MANHATTAN->distance=manhattanDistance(userText,baseText);
-           default -> distance=cosineDistance(userText, baseText);
-
+        double distance;
+        switch (method) {
+            case EUCLIDEAN -> distance = euclideanDistance(userText, baseText);
+            case MANHATTAN -> distance = manhattanDistance(userText, baseText);
+            default -> distance = cosineDistance(userText, baseText);
        }
-        return distance;
+       return distance;
    }
 
-
-    public static ArrayList<WordFrequency> intoArrayList(TreeMap<String, Integer> stemCountMap) {
+    /**
+     * Calculates the frequency of each stem in the text and stores in a WordFrequency ArrayList
+     * @param stemCountMap TreeMap containing each stem and its appereance count. Sorted by count
+     *
+     * @return ArrayList containing up to the 20 repeated words in descending order
+    */
+   public static ArrayList<WordFrequency> intoArrayList(TreeMap<String, Integer> stemCountMap) {
         ArrayList<WordFrequency> frequencyArray = new ArrayList<>();
         int totalWords = stemCountMap.size();
         String[] keys = stemCountMap.keySet().toArray(new String[0]);
@@ -64,58 +87,77 @@ public class Classifier {
                 frequencyArray.add(new WordFrequency(key, value, totalWords));
         }
         return frequencyArray;
-    }
+   }
 
+   /**
+    * Extracts the base data stored in each "Label"Arrays.txt and convert it back into an ArrayList
+    *
+    * @return ArrayList that contains every ArrayList extracted
+    */
+   private static ArrayList<ArrayList<WordFrequency>> extractBaseData()  {
+       ArrayList<ArrayList<WordFrequency>> data = new ArrayList<>();
+       for (Labels label: Labels.values()) {
 
-    private static ArrayList<ArrayList<WordFrequency>> ArrayOfArrays()  {
-        ArrayList<ArrayList<WordFrequency>> data = new ArrayList<>();
-        for (Labels label: Labels.values()) {
+           try {
+               File file = new File("dataset\\Label\\" + label + "\\" + label.toString().toLowerCase() + "Arrays.txt").getAbsoluteFile();
+               FileReader fr = new FileReader(file);
+               BufferedReader br = new BufferedReader(fr);
+               String line;
 
-        try {
-            File file = new File("dataset\\Label\\" + label + "\\" + label.toString().toLowerCase() + "Arrays.txt").getAbsoluteFile();
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
-            String line;
-            while ((line = br.readLine()) != null) {
-                line = line.replaceAll("\\[", "").replaceAll("]", "");
-                String[] splited = line.split(", ");
-                ArrayList<WordFrequency> text = new ArrayList<>();
-                for (String s : splited) {
-                    String[] s2 = s.split("=");
-                    WordFrequency word = new WordFrequency(s2[0], Double.parseDouble(s2[1]));
-                    text.add(word);
-                }
-                data.add(text);
-            }
+               while ((line = br.readLine()) != null) {
+                   line = line.replaceAll("\\[", "").replaceAll("]", "");
+                   String[] splited = line.split(", ");
+                   ArrayList<WordFrequency> text = new ArrayList<>();
 
+                   for (String s : splited) {
+                       String[] s2 = s.split("=");
+                       WordFrequency word = new WordFrequency(s2[0], Double.parseDouble(s2[1]));
+                       text.add(word);
+                   }
+                   data.add(text);
+               }
+           } catch (IOException ex) {
+               System.out.println(ex);
+           }
+       }
+       return data;
+   }
 
-        }
-        catch (IOException ex){
-            System.out.println(ex);
-            }
-        }
-        return  data;
-    }
+   /**
+    * Manhattan distance: sum of the absolute diferences between the two points being compared
+    *
+    * @param userText ArrayList of words and frequencies given by the user
+    * @param baseText ArrayList of words and frequencies of the current baseText
+    *
+    * @return distance between userText and baseText using the manhattan distance formula. Non-negative
+    */
+   private static double manhattanDistance(ArrayList<WordFrequency> userText, ArrayList<WordFrequency> baseText) {
+       double totaldistance = 0;
 
-    private static double manhattanDistance(ArrayList<WordFrequency> userText,ArrayList<WordFrequency> baseText){
-        double totaldistance=0;
+       for (WordFrequency wordUser:userText) {
+           double i = 0.1 * userText.indexOf(wordUser);
 
-        for (WordFrequency wordUser:userText) {
-            double i=0.1*userText.indexOf(wordUser);
-            if(baseText.contains(wordUser)){
-                WordFrequency wordBase=baseText.get(baseText.indexOf(wordUser));
-                    if(wordBase.word.equals(wordUser.word)){
-                        double j=0.1*userText.indexOf(wordUser);
-                        totaldistance+=Math.abs((wordBase.frequency-i)-(wordUser.frequency-j));
-                    }
-                }
+           if (baseText.contains(wordUser)) {
+               WordFrequency wordBase = baseText.get(baseText.indexOf(wordUser));
 
-            else
-                totaldistance += wordUser.frequency;
-        }
-        return totaldistance;
-    }
+               if(wordBase.word.equals(wordUser.word)) {
+                   double j = 0.1 * userText.indexOf(wordUser);
+                   totaldistance += Math.abs((wordBase.frequency - i)-(wordUser.frequency - j));
+               }
+           } else
+               totaldistance += wordUser.frequency;
+       }
+       return totaldistance;
+   }
 
+    /**
+     Euclidean distance: calculate the shortest path between two points using Pythagorean theorem
+
+     @param userText ArrayList of words and frequencies given by the user
+     @param baseText ArrayList of words and frequencies of the current baseText
+
+     @return distance between userText and baseText using the euclidean distance formula. Range goes from 0 to 1
+     */
     private static double euclideanDistance(ArrayList<WordFrequency> userText, ArrayList<WordFrequency> baseText) {
         double distance = 0;
 
@@ -133,8 +175,15 @@ public class Classifier {
         return Math.sqrt(distance);
     }
 
+    /**
+     * Cosine distance: Quantify the cosine of the angle between two vectors
+     *
+     * @param userText ArrayList of words and frequencies given by the user
+     * @param baseText ArrayList of words and frequencies of the current baseText
+     *
+     * @return distance between userText and baseText using the cosine distance formula. Range goes from -1 to 0
+     */
     private  static double cosineDistance(ArrayList<WordFrequency> userText, ArrayList<WordFrequency> baseText) {
-
         double distance = 0;
 
         for(int i = 0; i < baseText.size();i++){
@@ -154,11 +203,25 @@ public class Classifier {
         return distance - 1;
     }
 
+    /**
+     * @param labelCount list with the count value for each label stored in its corresponding label index
+     *
+     * @return Labels with the highest count
+    */
+    private static Labels getMaxLabel(ArrayList<Integer> labelCount) {
+        int max = 0;
+        for (Labels label: Labels.values()) {
+            if (labelCount.get(label.getIndex()) > max)
+                max = labelCount.get(label.getIndex());
+        }
+        return intoLabel(labelCount.indexOf(max));
+    }
+
     public static void main(String[] args) throws IOException {
         String text1 = "The lights dimmed in the movie theater and the previews began. The audience sat in anticipation, munching on their popcorn and sipping their sodas. And then, the opening credits started rolling - the music swelled and the screen came to life. The movie was a sweeping epic, filled with action, drama, and romance. The audience was swept away by the story, cheering at the hero's triumphs and crying at his losses. By the time the credits rolled again, the audience knew they had just experienced something special - a movie that would stay with them forever.";
         String text2 = "The film festival was in full swing, with movies from all over the world being screened in theaters around the city. Film buffs and casual moviegoers alike lined up to see the latest and greatest in cinema. There were comedies that had the audience laughing out loud, dramas that left them in tears, and documentaries that opened their eyes to new worlds. After each movie, there was a buzz in the air as people discussed what they had just seen. Some were blown away by the performances, others by the cinematography, and still others by the sheer creativity of the storytelling. For these movie lovers, the film festival was a highlight of the year - a chance to see the best of the best on the big screen.";
 
-        System.out.println(classifyText(text1,Methods.EUCLIDEAN,3));
+        System.out.println(classifyText(text1, Methods.COSINE,3));
 
 
         /*

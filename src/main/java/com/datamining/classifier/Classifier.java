@@ -10,7 +10,7 @@ public class Classifier {
     /**
      * The number of base texts stored per label
      */
-    private final static int DOCS_PER_LABEL = 3;
+    public final static int DOCS_PER_LABEL = 3;
 
     /**
      * Classifies a text into one of the available labels
@@ -19,7 +19,8 @@ public class Classifier {
      * @param k The k-nearest base texts used to decide the classification
      * @return String containing the name of the calculated label for the userText
     */
-    public static String classifyText(String userText, Methods method, int k) {
+    public static String classifyText(String userText, Methods method, int k) throws KTooLargeException {
+        if (k > DOCS_PER_LABEL * Labels.values().length) throw new KTooLargeException();
         ArrayList<ArrayList<WordFrequency>> data = extractBaseData();
         ArrayList<WordFrequency> userStemmedText = intoArrayList(stemText(clean(userText)));
         Queue<DistanceLabel> knnPlane = new PriorityQueue<>();
@@ -72,7 +73,7 @@ public class Classifier {
      * @param stemCountMap TreeMap containing each stem and its appereance count. Sorted by count
      * @return ArrayList containing up to the 20 repeated words in descending order
     */
-   public static ArrayList<WordFrequency> intoArrayList(TreeMap<String, Integer> stemCountMap) {
+   protected static ArrayList<WordFrequency> intoArrayList(TreeMap<String, Integer> stemCountMap) {
         ArrayList<WordFrequency> frequencyArray = new ArrayList<>();
         int totalWords = stemCountMap.size();
         String[] keys = stemCountMap.keySet().toArray(new String[0]);
@@ -176,15 +177,15 @@ public class Classifier {
     private  static double cosineDistance(ArrayList<WordFrequency> userText, ArrayList<WordFrequency> baseText) {
         double distance = 0;
 
-        for(int i = 0; i < baseText.size();i++){
+        for(int i = 0; i < baseText.size(); i++){
             WordFrequency wd = baseText.get(i);
-            if(userText.contains(wd)){
+            if(userText.contains(wd)) {
                 double userFreq = userText.get(userText.indexOf(wd)).frequency;
-                double userIndex = userText.indexOf(wd)+1 * 0.01;
+                double userIndex = userText.indexOf(wd) + 1 * 0.01;
                 distance +=
-                        (((userIndex*wd.frequency)+((i+1)*0.01*userFreq))) /
-                                (Math.sqrt((wd.frequency*wd.frequency)+(((i+1)*0.01)*((i+1)*0.1)))+
-                                        Math.sqrt((userFreq*userFreq)+(userIndex*userIndex)));
+                        (((userIndex*wd.frequency) + ((i + 1) * 0.01 * userFreq))) /
+                                (Math.sqrt((wd.frequency*wd.frequency) + (((i + 1) * 0.01) * ((i + 1) * 0.1))) +
+                                        Math.sqrt((userFreq * userFreq) + (userIndex * userIndex)));
             }
             else{
                 distance += wd.frequency;
@@ -210,7 +211,7 @@ public class Classifier {
         String text1 = "The lights dimmed in the movie theater and the previews began. The audience sat in anticipation, munching on their popcorn and sipping their sodas. And then, the opening credits started rolling - the music swelled and the screen came to life. The movie was a sweeping epic, filled with action, drama, and romance. The audience was swept away by the story, cheering at the hero's triumphs and crying at his losses. By the time the credits rolled again, the audience knew they had just experienced something special - a movie that would stay with them forever.";
         String text2 = "The film festival was in full swing, with movies from all over the world being screened in theaters around the city. Film buffs and casual moviegoers alike lined up to see the latest and greatest in cinema. There were comedies that had the audience laughing out loud, dramas that left them in tears, and documentaries that opened their eyes to new worlds. After each movie, there was a buzz in the air as people discussed what they had just seen. Some were blown away by the performances, others by the cinematography, and still others by the sheer creativity of the storytelling. For these movie lovers, the film festival was a highlight of the year - a chance to see the best of the best on the big screen.";
 
-        System.out.println(classifyText(text1, Methods.COSINE,3));
+        System.out.println(classifyText(text1, Methods.COSINE,200));
 
 
         String e1 = "Most moviegoers can pinpoint one summer movie – or perhaps, a summer of movies – in their formative years that really and truly cemented their love for going to the cinema, whether it be 1975’s “Jaws,” “E.T. the Extra-Terrestrial” from 1982, or “Independence Day” in 1996. Sure, a lot has happened since those golden years of the bustling multiplex – most notably the streaming revolution, not to mention a multi-year pandemic – but studio heads at last week’s CinemaCon (the annual convention where Hollywood shows theater owners what they have in store for the coming year) were quick to thump their chests and say, “Movies are back!” For proof, one need only look at this year’s billion-dollar-grossing “Super Mario Bros. Movie” (not to mention last year’s “Avatar” sequel) to see that theatrical movies, as it were, never really left. And while streaming has clearly siphoned off part of the audience, particularly for more serious films, what we think of as “summer movies” still have the potential to rake in cash just like the old days. With that said, at this juncture just ahead of the summer months, behold the list of flicks releasing “only in theaters” that are hoping to do exactly that, in order of release date:";

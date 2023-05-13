@@ -1,5 +1,8 @@
 package com.datamining.classifier;
 
+/**
+ * Represents a stemmed word and its frequency of appereance in the text it comes from
+ */
 public class WordFrequency implements Comparable<WordFrequency> {
     public String word;
     public double frequency;

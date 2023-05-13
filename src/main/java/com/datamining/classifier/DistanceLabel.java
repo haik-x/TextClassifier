@@ -1,6 +1,8 @@
 package com.datamining.classifier;
 
-import java.util.Comparator;
+    /**
+     * Represents the distance between the user text and a base text and the label of such base text
+     */
 
 public class DistanceLabel implements Comparable<DistanceLabel> {
     double distance;

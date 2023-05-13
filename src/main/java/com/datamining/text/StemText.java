@@ -6,7 +6,7 @@ import static com.datamining.text.Stemming.stem;
 
 public class StemText {
     /**
-     *
+     * Apply stemming algorithm to every word in the words ArrayList
      * @param words ArrayList of stemmed words
      * @return TreeMap containing a stem and the count of appeareances. Sorted by count
      */

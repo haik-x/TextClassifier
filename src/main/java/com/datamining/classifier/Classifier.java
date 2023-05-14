@@ -7,56 +7,71 @@ import static com.datamining.text.StemText.stemText;
 import static com.datamining.classifier.Labels.intoLabel;
 import static com.datamining.text.HandlingPDF.extractPDFText;
 import static com.datamining.text.HandlingTXT.extractTXTText;
+
+/**
+ * This Class contains the method to classify a text into one of th eavailable labels
+ */
 public class Classifier {
-    /**
-     * The number of base texts stored per label
-     */
     public final static int TEXTS_PER_LABEL = 10;
     public final static int BASE_TEXTS_TOTAL = TEXTS_PER_LABEL * Labels.values().length;
-    public final static int LIMIT_OF_MOST_FREQUENT_WORDS=30;
+    public final static int LIMIT_OF_MOST_FREQUENT_WORDS = 30;
+
     private String userText;
     private int k;
     private Labels label;
     private TextType textType;
 
-    public Classifier (String userText, int k, TextType textType){
+    /**
+     * Constructs a Classifier object with the values specified by the user
+     * @param userText String containing the text or the path of the file containing the text to classify
+     * @param k The k-nearest base texts used to decide the classification
+     * @param textType Type of text contained in userText. Either a path to a PDF or TXT or the text as a String
+     */
+    public Classifier (String userText, int k, TextType textType) {
         setUserText(userText);
         setK(k);
         setTextType(textType);
+        setLabel(null);
     }
-    
+
+    /**
+     * Constructs a Classifier object with the values specified by the user and a default k value of 5
+     * @param userText String containing the text or the path of the file containing the text to classify
+     * @param textType Type of text contained in userText. Either a path to a PDF or TXT or the text as a String
+     */
     public Classifier(String userText, TextType textType) {
         this(userText, 5, textType);
     }
 
     /**
-     * Classifies a text into one of the available labels
+     * Classifies a text into one of the available labels using the specified values
      * @param userText text to classify provided by the user
      * @param method Preferred method to calculate distance
-     * @param k The k-nearest base texts used to decide the classification. It is recommended to be set an odd number to avoid ties
+     * @param k The k-nearest base texts used to decide the classification
      * @return String containing the name of the calculated label for the userText
     */
-
-
     public static String classifyText(String userText, Methods method, int k, TextType textType) throws KTooLargeException {
 
         if (k > BASE_TEXTS_TOTAL) throw new KTooLargeException();
-        ArrayList<ArrayList<WordFrequency>> data = extractBaseData();
+
+        ArrayList<ArrayList<WordFrequency>> baseData = extractBaseData();
         ArrayList<WordFrequency> userStemmedText = intoArrayList(stemText(clean(getText(textType,userText))));
         Queue<DistanceLabel> knnPlane = new PriorityQueue<>();
-        int labelIndex = 0;
 
+        // Calculate distance between userText and each baseText in baseData
+        int labelIndex = 0;
         for (Labels label:Labels.values()) {
             for (int i = 0; i < TEXTS_PER_LABEL; i++) {
-                double distance = getDistance(userStemmedText, data.get(i + (labelIndex* TEXTS_PER_LABEL)), method);
+                double distance = getDistance(userStemmedText, baseData.get(i + (labelIndex * TEXTS_PER_LABEL)), method);
                 knnPlane.add(new DistanceLabel(distance, label));
             }
             labelIndex++;
         }
-        ArrayList<DistanceLabel> knn=new ArrayList<>(knnPlane);
+        ArrayList<DistanceLabel> knn = new ArrayList<>(knnPlane);
         Collections.sort(knn);
 
-        ArrayList<Integer>labelCount = new ArrayList<>();
+        // Count how many base texts of each label are in within the k-nearest texts
+        ArrayList<Integer> labelCount = new ArrayList<>();
         for (Labels l:Labels.values()) {
             labelCount.add(l.getIndex(), 0);
         }
@@ -66,19 +81,28 @@ public class Classifier {
             value += 1;
             labelCount.set(dl.label.getIndex(), value);
         }
-
-
         return getMaxLabel(labelCount).toString();
    }
 
+    /**
+     * Assigns a Labels to the label property and returns its String value, using the specified distance method
+     * @param methods Method used to calculate distance betwee texts
+     * @return The String value of the Labels assigned to the label property
+     */
    public String classifyText(Methods methods){
-      String label= classifyText(this.userText,methods, this.k, this.textType);
-      this.label=intoLabel(label);
+      String label = classifyText(this.userText,methods, this.k, this.textType);
+      setLabel(intoLabel(label));
       return label;
    }
 
-   private static String getText(TextType tT, String userText){
-        return switch (tT){
+    /**
+     * Filters into method to extract a String from the userText based on the specified textType
+     * @param textType TextType used to determine the correct method
+     * @param userText String containing the file path or the text provided by the user
+     * @return A String with the content of the file path or text in userText
+     */
+   private static String getText(TextType textType, String userText){
+        return switch (textType){
             case PDF -> extractPDFText(userText);
             case TXT -> extractTXTText(userText);
             default -> userText;
@@ -126,7 +150,7 @@ public class Classifier {
     * Extracts the base data stored in each "Label"Arrays.txt and convert it back into an ArrayList
     * @return ArrayList that contains every ArrayList extracted
     */
-   private static ArrayList<ArrayList<WordFrequency>> extractBaseData()  {
+   private static ArrayList<ArrayList<WordFrequency>> extractBaseData() {
        ArrayList<ArrayList<WordFrequency>> data = new ArrayList<>();
        for (Labels label: Labels.values()) {
 
@@ -149,7 +173,7 @@ public class Classifier {
                    data.add(text);
                }
            } catch (IOException ex) {
-               System.out.println(ex);
+               throw new RuntimeException(ex);
            }
        }
        return data;
@@ -172,11 +196,11 @@ public class Classifier {
 
                if(wordBase.word.equals(wordUser.word)) {
                    double j = 0.1 * userText.indexOf(wordUser);
-                   totaldistance += Math.abs((wordBase.frequency - i)-(wordUser.frequency - j));
+                   totaldistance += Math.abs((wordBase.frequency - i) - (wordUser.frequency - j));
                }
            } else
-               // sums wordfrecuency and
-               totaldistance += wordUser.frequency+(0.01*(-i+LIMIT_OF_MOST_FREQUENT_WORDS));
+               // If word in the user text is not found, add its frequency plus an index based value to distance
+               totaldistance += wordUser.frequency + (0.01 * (-i + LIMIT_OF_MOST_FREQUENT_WORDS));
        }
        return totaldistance;
    }
@@ -194,10 +218,11 @@ public class Classifier {
             WordFrequency word = userText.get(userTextIndex);
             if (baseText.contains(word)) {
                 int baseTextIndex = baseText.indexOf(word);
-                distance += Math.pow((word.frequency + (userTextIndex * 0.01)) - (baseText.get(baseTextIndex).frequency+ (baseTextIndex * 0.01)), 2);
+                distance += Math.pow((word.frequency + (userTextIndex * 0.01)) - (baseText.get(baseTextIndex).frequency + (baseTextIndex * 0.01)), 2);
 
             } else {
-                distance += (word.frequency)+(0.01*(-userTextIndex+(LIMIT_OF_MOST_FREQUENT_WORDS)));
+                // If word in the user text is not found, add its frequency plus an index based value to distance
+                distance += (word.frequency) + (0.01 * (-userTextIndex + LIMIT_OF_MOST_FREQUENT_WORDS));
             }
         }
 
@@ -219,18 +244,19 @@ public class Classifier {
                 double userFreq = userText.get(userText.indexOf(wd)).frequency;
 
                 distance +=
-                        (((userIndex*wd.frequency) + ((i + 1) * 0.01 * userFreq))) /
-                                (Math.sqrt((wd.frequency*wd.frequency) + (((i + 1) * 0.01) * ((i + 1) * 0.1))) +
+                        (((userIndex * wd.frequency) + ((i + 1) * 0.01 * userFreq))) /
+                                (Math.sqrt((wd.frequency * wd.frequency) + (((i + 1) * 0.01) * ((i + 1) * 0.1))) +
                                         Math.sqrt((userFreq * userFreq) + (userIndex * userIndex)));
-            }
-            else{
-                distance += wd.frequency+(0.01*(-userIndex+(LIMIT_OF_MOST_FREQUENT_WORDS+1) ));
+            } else {
+                // If word in the user text is not found, add its frequency plus an index based value to distance
+                distance += wd.frequency + (0.01 * (-userIndex + (LIMIT_OF_MOST_FREQUENT_WORDS + 1)));
             }
         }
         return distance;
     }
 
     /**
+     * Returns the most repeated Labels in the k-nearest documents
      * @param labelCount list with the count value for each label stored in its corresponding label index
      * @return Labels with the highest count
     */
@@ -243,38 +269,69 @@ public class Classifier {
         return intoLabel(labelCount.indexOf(max));
     }
 
+    /**
+     * Replaces the text or file path with the specified String
+     * @param userText New text or file path to replace the old one with
+     */
     public void setUserText(String userText) {
         this.userText = userText;
     }
 
-    public void setK(int k) {
+    /**
+     * Replaces the k value with a new one
+     * @param k New k value to replace the old one with
+     * @throws KTooLargeException When k is larger than the number of available base texts
+     */
+    public void setK(int k) throws KTooLargeException {
+        if (k > BASE_TEXTS_TOTAL) throw new KTooLargeException();
         this.k = k;
     }
 
-    public void setLabel(Labels label) {
-        this.label = label;
-    }
-
+    /**
+     * Replaces the type of text the userText is considered. This will change how the userText is processed
+     * @param textType TextType to replace the old one with
+     */
     public void setTextType(TextType textType) {
         this.textType = textType;
     }
 
+    /**
+     * Assign a Labels to the label property
+     * @param label Labels value result of applying the classifyText method
+     */
+    private void setLabel(Labels label) {
+        this.label = label;
+    }
+
+    /**
+     * Returns the current value of the userText property
+     * @return The current value of the userText property
+     */
     public String getUserText() {
         return userText;
     }
 
+    /**
+     * Returns the current value of the k property
+     * @return The current value of the k property
+     */
     public int getK() {
         return k;
     }
 
+    /**
+     * Returns the current value of the label property
+     * @return The current value of the label property
+     */
     public Labels getLabel() {
         return label;
     }
 
+    /**
+     * Returns the current value of the textType property
+     * @return The current value of the textType property
+     */
     public TextType getTextType() {
         return textType;
     }
-
-
-
 }

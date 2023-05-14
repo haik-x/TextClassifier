@@ -38,7 +38,6 @@ public class Stemming {
      * @param word The word to evaluate by its ending
      * @return A substring of the word with its ending removed
      * */
-
     private static String step1a(String word) {
         if (word.endsWith("s")) {
             if (word.endsWith("sses")) wordLength -= 2;

@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4d4ad05e-6243-4b63-9ffb-67497bb8cec6" name="Changes" comment="" />
+    <list default="true" id="4d4ad05e-6243-4b63-9ffb-67497bb8cec6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/datamining/classifier/Classifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/datamining/classifier/Classifier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/datamining/classifier/DistanceLabel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/datamining/classifier/DistanceLabel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/datamining/classifier/Methods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/datamining/classifier/Methods.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/datamining/text/StemText.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/datamining/text/StemText.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/datamining/text/Stemming.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/datamining/text/Stemming.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -126,7 +132,7 @@
       <workItem from="1682980892500" duration="11875000" />
       <workItem from="1683654034050" duration="3036000" />
       <workItem from="1683912180034" duration="1940000" />
-      <workItem from="1684087744366" duration="8391000" />
+      <workItem from="1684087744366" duration="8697000" />
     </task>
     <servers />
   </component>

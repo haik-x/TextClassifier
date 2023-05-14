@@ -23,7 +23,10 @@ public class Classifier {
         setUserText(userText);
         setK(k);
         setTextType(textType);
-
+    }
+    
+    public Classifier(String userText, TextType textType) {
+        this(userText, 5, textType);
     }
 
     /**

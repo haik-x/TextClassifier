@@ -29,6 +29,10 @@ public class Stemming {
         return stemmedWord.toLowerCase();
     }
 
+    /*
+        Stemming steps
+        Each word is applied many
+     */
     private static String step1a(String word) {
         if (word.endsWith("s")) {
             if (word.endsWith("sses")) wordLength -= 2;

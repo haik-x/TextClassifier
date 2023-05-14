@@ -1,5 +1,7 @@
 package com.datamining.classifier;
 
+import java.awt.*;
+
 public enum Labels {
     /**
      * Entertainment label
@@ -47,6 +49,16 @@ public enum Labels {
             case 2 -> SPORTS;
             case 3 -> SCIENCE;
             default -> throw new IllegalStateException("Unexpected value: " + index);
+        };
+
+    }
+    public static Labels intoLabel(String labelName) {
+        return switch (labelName.toLowerCase()) {
+            case "entertainment" -> ENTERTAINMENT;
+            case "politics" -> POLITICS;
+            case "sports" -> SPORTS;
+            case "science" -> SCIENCE;
+            default -> throw new IllegalStateException("Unexpected value: " + labelName);
         };
     }
 }

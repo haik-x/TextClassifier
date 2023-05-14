@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Training {
+public class UpdateBaseText {
     private static void train() {
         for (Labels label: Labels.values()) {
             File arraysFile;

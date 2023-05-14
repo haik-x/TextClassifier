@@ -9,12 +9,12 @@ public class HandlingPDF {
 
     public HandlingPDF(){}
 
-    public static String extractText(String dir){
+    public static String extractPDFText(String path){
 
         String text = null;
 
         try{
-            PDDocument document = PDDocument.load(new File(dir));
+            PDDocument document = PDDocument.load(new File(path));
             PDFTextStripper pdfStripper = new PDFTextStripper();
             text = pdfStripper.getText(document);
 

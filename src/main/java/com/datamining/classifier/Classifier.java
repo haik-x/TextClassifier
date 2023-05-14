@@ -5,13 +5,24 @@ import java.util.*;
 import static com.datamining.text.Cleaning.clean;
 import static com.datamining.text.StemText.stemText;
 import static com.datamining.classifier.Labels.intoLabel;
-
+import static com.datamining.text.HandlingPDF.extractPDFText;
+import static com.datamining.text.HandlingTXT.extractTXTText;
 public class Classifier {
     /**
      * The number of base texts stored per label
      */
     public final static int TEXTS_PER_LABEL = 5;
     public final static int BASE_TEXTS_TOTAL = TEXTS_PER_LABEL * Labels.values().length;
+
+    private String userText;
+    private int k;
+    private Labels label;
+    private textType textType;
+
+    public Classifier (String userText, int k, textType textType){
+        this.userText=userText;
+        this.k=k;
+    }
 
     /**
      * Classifies a text into one of the available labels
@@ -20,7 +31,10 @@ public class Classifier {
      * @param k The k-nearest base texts used to decide the classification. It is recommended to be set an odd number to avoid ties
      * @return String containing the name of the calculated label for the userText
     */
-    public static String classifyText(String userText, Methods method, int k) throws KTooLargeException {
+
+
+    public static String classifyText(String userText, Methods method, int k,textType textType) throws KTooLargeException {
+
         if (k > BASE_TEXTS_TOTAL) throw new KTooLargeException();
         ArrayList<ArrayList<WordFrequency>> data = extractBaseData();
         ArrayList<WordFrequency> userStemmedText = intoArrayList(stemText(clean(userText)));
@@ -50,6 +64,20 @@ public class Classifier {
         System.out.println(labelCount);
 
         return getMaxLabel(labelCount).toString();
+   }
+
+   public String classifyText(Methods methods){
+      String label= classifyText(this.userText,methods, this.k, this.textType);
+      this.label=intoLabel(label);
+      return label;
+   }
+
+   private static String getText(textType tT, String userText){
+        return switch (tT){
+            case PDF -> extractPDFText(userText);
+            case TXT -> extractTXTText(userText);
+            default -> userText;
+        };
    }
 
     /**
@@ -208,6 +236,38 @@ public class Classifier {
         return intoLabel(labelCount.indexOf(max));
     }
 
+    public void setUserText(String userText) {
+        this.userText = userText;
+    }
+
+    public void setK(int k) {
+        this.k = k;
+    }
+
+    public void setLabel(Labels label) {
+        this.label = label;
+    }
+
+    public void setTextType(com.datamining.classifier.textType textType) {
+        this.textType = textType;
+    }
+
+    public String getUserText() {
+        return userText;
+    }
+
+    public int getK() {
+        return k;
+    }
+
+    public Labels getLabel() {
+        return label;
+    }
+
+    public com.datamining.classifier.textType getTextType() {
+        return textType;
+    }
+
     public static void main(String[] args) throws IOException {
 //        String text1 = "The lights dimmed in the movie theater and the previews began. The audience sat in anticipation, munching on their popcorn and sipping their sodas. And then, the opening credits started rolling - the music swelled and the screen came to life. The movie was a sweeping epic, filled with action, drama, and romance. The audience was swept away by the story, cheering at the hero's triumphs and crying at his losses. By the time the credits rolled again, the audience knew they had just experienced something special - a movie that would stay with them forever.";
 //        String text2 = "The film festival was in full swing, with movies from all over the world being screened in theaters around the city. Film buffs and casual moviegoers alike lined up to see the latest and greatest in cinema. There were comedies that had the audience laughing out loud, dramas that left them in tears, and documentaries that opened their eyes to new worlds. After each movie, there was a buzz in the air as people discussed what they had just seen. Some were blown away by the performances, others by the cinematography, and still others by the sheer creativity of the storytelling. For these movie lovers, the film festival was a highlight of the year - a chance to see the best of the best on the big screen.";
@@ -244,9 +304,9 @@ public class Classifier {
         System.out.println(cosineDistance(q1,q3));
         System.out.println(cosineDistance(q1,q4));*/
 
-
+/*
         String test = "Biologists who have been obtaining DNA sequences online from companies will soon have a more convenient option: benchtop machines that can print all the DNA they need. But this technology brings with it new risks by circumventing how synthetic biology companies now screen for would-be bioterrorists. A report released yesterday by a Washington, D.C., think tank urges companies and governments to revamp existing screening to prevent someone with malign motives from making a toxin or pathogen. The current screening system, which is voluntary, “could be upended by benchtop DNA synthesis,” says report co-author Jaime Yassif, vice president for global biological policy and programs at the Nuclear Threat Initiative. “Governments, industry, and the broader scientific community need to put stronger safeguards in place to ensure this technology is not exploited by malicious actors and that it doesn’t lead to a catastrophic accident,”she says.";
         System.out.println(classifyText(test, Methods.EUCLIDEAN, 15));
-        System.out.println(BASE_TEXTS_TOTAL);
+        System.out.println(BASE_TEXTS_TOTAL);*/
     }
 }

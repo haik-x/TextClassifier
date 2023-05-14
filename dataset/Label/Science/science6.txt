@@ -1,0 +1,15 @@
+While conducting a study of Petermann Glacier in northwest Greenland, researchers at the University of California, Irvine and NASA's Jet Propulsion Laboratory uncovered a previously unseen way in which the ice and ocean interact. The glaciologists said their findings could mean that the climate community has been vastly underestimating the magnitude of future sea level rise caused by polar ice deterioration.
+
+Using satellite radar data from three European missions, the UCI/NASA team learned that Petermann Glacier's grounding line -- where ice detaches from the land bed and begins floating in the ocean -- shifts substantially during tidal cycles, allowing warm seawater to intrude and melt ice at an accelerated rate. The group's results are the subject of a paper published in Proceedings of the National Academy of Sciences.
+
+"Petermann's grounding line could be more accurately described as a grounding zone, because it migrates between 2 and 6 kilometers as tides come in and out," said lead author Enrico Ciraci, UCI assistant specialist in Earth system science and NASA postdoctoral fellow. "This is an order of magnitude larger than expected for grounding lines on a rigid bed."
+
+He said the traditional view of grounding lines beneath ocean-reaching glaciers was that they did not migrate during tidal cycles, nor did they experience ice melt. But the new study replaces that thinking with knowledge that warm ocean water intrudes beneath the ice through preexisting subglacial channels, with the highest melt rates occurring at the grounding zone.
+
+The researchers found that as Petermann Glacier's grounding line retreated nearly 4 kilometers -- 2½ miles -- between 2016 and 2022, warm water carved a 670-foot-tall cavity in the underside of the glacier, and that abscess remained there for all of 2022.
+
+"These ice-ocean interactions make the glaciers more sensitive to ocean warming," said senior co-author Eric Rignot, UCI professor of Earth system science and NASA JPL research scientist. "These dynamics are not included in models, and if we were to include them, it would increase projections of sea level rise by up to 200 percent -- not just for Petermann but for all glaciers ending in the ocean, which is most of northern Greenland and all of Antarctica."
+
+The Greenland ice sheet has lost billions of tons of ice to the ocean in the past few decades, the PNAS paper stresses, with most of the loss caused by warming of subsurface ocean waters, a product of Earth's changing climate. Exposure to ocean water melts the ice vigorously at the glacier front and erodes resistance to the movement of glaciers over the ground, causing the ice to slide more quickly to the sea, according to Rignot.
+
+Ciraci's research was supported by the NASA Postdoctoral Program at the Jet Propulsion Laboratory. Joining Ciraci and Rignot on the project were Bernd Scheuchl, UCI associate project scientist; Valentyn Tolpekin and Michael Wollersheim of Finland's Iceye mission; Lu An of China's Tongji University; Pietro Milillo of the University of Houston; Jose-Luis Bueso-Bello of the German Aerospace Center; and Luigi Dini of the Italian Space Agency.

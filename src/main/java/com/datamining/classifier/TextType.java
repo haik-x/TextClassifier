@@ -1,6 +1,6 @@
 package com.datamining.classifier;
 
-public enum textType {
+public enum TextType {
     TXT,
     PDF,
     STRING

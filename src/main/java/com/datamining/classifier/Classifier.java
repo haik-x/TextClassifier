@@ -11,15 +11,15 @@ public class Classifier {
     /**
      * The number of base texts stored per label
      */
-    public final static int TEXTS_PER_LABEL = 5;
+    public final static int TEXTS_PER_LABEL = 10;
     public final static int BASE_TEXTS_TOTAL = TEXTS_PER_LABEL * Labels.values().length;
-
+    public final static int LIMIT_OF_MOST_FREQUENT_WORDS=30;
     private String userText;
     private int k;
     private Labels label;
-    private textType textType;
+    private TextType textType;
 
-    public Classifier (String userText, int k, textType textType){
+    public Classifier (String userText, int k, TextType textType){
         this.userText=userText;
         this.k=k;
     }
@@ -33,11 +33,11 @@ public class Classifier {
     */
 
 
-    public static String classifyText(String userText, Methods method, int k,textType textType) throws KTooLargeException {
+    public static String classifyText(String userText, Methods method, int k, TextType textType) throws KTooLargeException {
 
         if (k > BASE_TEXTS_TOTAL) throw new KTooLargeException();
         ArrayList<ArrayList<WordFrequency>> data = extractBaseData();
-        ArrayList<WordFrequency> userStemmedText = intoArrayList(stemText(clean(userText)));
+        ArrayList<WordFrequency> userStemmedText = intoArrayList(stemText(clean(getText(textType,userText))));
         Queue<DistanceLabel> knnPlane = new PriorityQueue<>();
         int labelIndex = 0;
 
@@ -48,20 +48,20 @@ public class Classifier {
             }
             labelIndex++;
         }
+        ArrayList<DistanceLabel> knn=new ArrayList<>(knnPlane);
+        Collections.sort(knn);
 
         ArrayList<Integer>labelCount = new ArrayList<>();
         for (Labels l:Labels.values()) {
             labelCount.add(l.getIndex(), 0);
         }
-
         for (int i = 0; i < k; i++) {
-            DistanceLabel dl=knnPlane.poll();
+            DistanceLabel dl=knn.get(i);
             Integer value = labelCount.get(dl.label.getIndex());
-            value = value == null ? 0:value + 1;
+            value += 1;
             labelCount.set(dl.label.getIndex(), value);
         }
 
-        System.out.println(labelCount);
 
         return getMaxLabel(labelCount).toString();
    }
@@ -72,7 +72,7 @@ public class Classifier {
       return label;
    }
 
-   private static String getText(textType tT, String userText){
+   private static String getText(TextType tT, String userText){
         return switch (tT){
             case PDF -> extractPDFText(userText);
             case TXT -> extractTXTText(userText);
@@ -108,7 +108,7 @@ public class Classifier {
         String[] keys = stemCountMap.keySet().toArray(new String[0]);
         Integer[] values = stemCountMap.values().toArray(new Integer[0]);
 
-        for (int i = 0; i < Math.min(keys.length, 20); i++) {
+        for (int i = 0; i < Math.min(keys.length, LIMIT_OF_MOST_FREQUENT_WORDS); i++) {
             String key = keys[i];
             int value = values[i];
             if (key != null)
@@ -170,7 +170,8 @@ public class Classifier {
                    totaldistance += Math.abs((wordBase.frequency - i)-(wordUser.frequency - j));
                }
            } else
-               totaldistance += wordUser.frequency;
+               // sums wordfrecuency and
+               totaldistance += wordUser.frequency+(0.01*(-i+LIMIT_OF_MOST_FREQUENT_WORDS));
        }
        return totaldistance;
    }
@@ -188,13 +189,13 @@ public class Classifier {
             WordFrequency word = userText.get(userTextIndex);
             if (baseText.contains(word)) {
                 int baseTextIndex = baseText.indexOf(word);
-
-                distance += Math.pow((word.frequency + (userTextIndex * 0.01)) - (baseText.get(baseTextIndex).frequency + (baseTextIndex * 0.01)), 2);
+                distance += Math.pow((word.frequency + (userTextIndex * 0.01)) - (baseText.get(baseTextIndex).frequency+ (baseTextIndex * 0.01)), 2);
 
             } else {
-                distance += (word.frequency);
+                distance += (word.frequency)+(0.01*(-userTextIndex+(LIMIT_OF_MOST_FREQUENT_WORDS)));
             }
         }
+
         return Math.sqrt(distance);
     }
     /**
@@ -208,16 +209,17 @@ public class Classifier {
 
         for(int i = 0; i < baseText.size(); i++){
             WordFrequency wd = baseText.get(i);
+            double userIndex = userText.indexOf(wd) + 1 * 0.01;
             if(userText.contains(wd)) {
                 double userFreq = userText.get(userText.indexOf(wd)).frequency;
-                double userIndex = userText.indexOf(wd) + 1 * 0.01;
+
                 distance +=
                         (((userIndex*wd.frequency) + ((i + 1) * 0.01 * userFreq))) /
                                 (Math.sqrt((wd.frequency*wd.frequency) + (((i + 1) * 0.01) * ((i + 1) * 0.1))) +
                                         Math.sqrt((userFreq * userFreq) + (userIndex * userIndex)));
             }
             else{
-                distance += wd.frequency;
+                distance += wd.frequency+(0.01*(-userIndex+(LIMIT_OF_MOST_FREQUENT_WORDS+1) ));
             }
         }
         return distance;
@@ -248,7 +250,7 @@ public class Classifier {
         this.label = label;
     }
 
-    public void setTextType(com.datamining.classifier.textType textType) {
+    public void setTextType(TextType textType) {
         this.textType = textType;
     }
 
@@ -264,7 +266,7 @@ public class Classifier {
         return label;
     }
 
-    public com.datamining.classifier.textType getTextType() {
+    public TextType getTextType() {
         return textType;
     }
 

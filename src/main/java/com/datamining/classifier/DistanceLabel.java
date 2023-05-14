@@ -23,11 +23,17 @@ public class DistanceLabel implements Comparable<DistanceLabel> {
 
     @Override
     public int compareTo(DistanceLabel dl) {
-        if (this.distance > dl.distance) {
+        if(Math.abs(this.distance-dl.distance)<0.0000001)
+            return 0;
+        else if (this.distance > dl.distance) {
             return 1;
-        } else if (this.distance < dl.distance) {
+        } else {
             return -1;
         }
-        return 0;
     }
-}
+
+        @Override
+        public String toString() {
+            return String.format("%s: %f", this.label, this.distance);
+        }
+    }

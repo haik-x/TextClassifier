@@ -10,25 +10,20 @@ public class DistanceLabel implements Comparable<DistanceLabel> {
      */
     double distance;
     /**
-     * The label of the base text which it´s distance was obteined.
+     * The label of the base text which its distance was obtained.
      */
     Labels label;
 
     /**
      * Constructor of the object Distance lable
-     * @param distance
-     * @param label
+     * @param distance distance between a base text and a user text.
+     * @param label label of the base text
      */
     public DistanceLabel(double distance, Labels label) {
         this.distance = distance;
         this.label = label;
     }
 
-        /**
-         * @Override equals so two DistanceLables were equals only if the distance are equals *
-         * @param obj
-         * @return
-         */
 
     @Override
     public boolean equals(Object obj) {
@@ -54,6 +49,9 @@ public class DistanceLabel implements Comparable<DistanceLabel> {
             return -1;
         }
     }
+        /**
+         * @return toString of DistanceLabel object.
+         */
 
     @Override
     public String toString() {

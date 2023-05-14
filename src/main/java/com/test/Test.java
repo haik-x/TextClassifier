@@ -6,8 +6,8 @@ import com.datamining.classifier.TextType;
 
 public class Test {
     public static void main(String[] args) {
-        String text="/Users/benjamin/Desktop/POO/TextClassifier/src/main/java/com/test/test.txt";
-        String science="/Users/benjamin/Desktop/POO/TextClassifier/src/main/java/com/test/pdf1.pdf";
+        String text="C:\\Users\\samab\\Proyecto POO\\TextClassifier\\src\\main\\java\\com\\test\\test.txt";
+        String science="C:\\Users\\samab\\Proyecto POO\\TextClassifier\\src\\main\\java\\com\\test\\pdf1.pdf";
         String politics="President Joe Biden signed a sweeping executive order on May 12 aimed at improving the country's cybersecurity and protecting federal government networks from cyber attacks. The order includes measures such as the establishment of cybersecurity performance goals for government contractors and the creation of a standardized playbook for responding to cyber incidents. The move comes after a series of high-profile cyber attacks on U.S. entities in recent months, including the Colonial Pipeline ransomware attack and the SolarWinds supply chain attack.";
         String science2 = "Scientists have made a breakthrough in the field of quantum computing by creating a device that can perform a specific type of calculation faster than any classical computer. The device, called a boson sampler, uses photons to perform a task that would take a classical computer years to complete.\n" +
                 "\n" +

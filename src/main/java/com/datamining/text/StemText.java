@@ -4,9 +4,12 @@ import java.util.*;
 
 import static com.datamining.text.Stemming.stem;
 
+/**
+ * This Class provides a method that applies stemming to every word contained in an ArrayList
+ */
 public class StemText {
     /**
-     * Apply stemming algorithm to every word in the words ArrayList
+     * Applies stemming algorithm to every word in the words ArrayList
      * @param words ArrayList of stemmed words
      * @return TreeMap containing a stem and the count of appeareances. Sorted by count
      */

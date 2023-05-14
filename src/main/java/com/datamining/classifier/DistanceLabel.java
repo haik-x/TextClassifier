@@ -60,6 +60,6 @@ public class DistanceLabel implements Comparable<DistanceLabel> {
      */
     @Override
     public String toString() {
-            return String.format("%s: %f", this.label, this.distance);
-        }
+        return String.format("%s: %f", this.label, this.distance);
     }
+}

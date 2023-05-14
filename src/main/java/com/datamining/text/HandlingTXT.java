@@ -24,6 +24,7 @@ public class HandlingTXT {
         } catch (IOException e) {
             System.out.println("File not found");
             e.printStackTrace();
+            return null;
         }
 
         return data.toString();

@@ -2,6 +2,9 @@ package com.datamining.classifier;
 
 import java.awt.*;
 
+/**
+ *  Labels that can be used for classification
+ * **/
 public enum Labels {
     /**
      * Entertainment label
@@ -25,21 +28,33 @@ public enum Labels {
 
     private final String label;
     private final int index;
+
+
+    /** Assigns values to label and index
+     * @param label to save the string value of the label
+     * @param index to save the index of the label
+     */
     private Labels(String label, int index) {
         this.label = label; this.index=index;
     }
 
+    /**
+     * @return the String value of the label
+     * **/
     public String toString() {
         return this.label;
     }
 
+    /**
+     * @return the int value of the index of the label
+     * **/
     public int getIndex() {
         return index;
     }
 
     /**
      * Converts an index number into a Labels
-     * @param index Int number to convert into a Labels
+     * @param index Int number to convert into a Label
      * @return The Labels that corresponds to the given index
      */
     public static Labels intoLabel(int index) {
@@ -52,6 +67,12 @@ public enum Labels {
         };
 
     }
+
+    /**
+     * Converts a String value into a Label
+     * @param labelName String  to convert into a Label
+     * @return The Labels that corresponds to the given label name
+     */
     public static Labels intoLabel(String labelName) {
         return switch (labelName.toLowerCase()) {
             case "entertainment" -> ENTERTAINMENT;

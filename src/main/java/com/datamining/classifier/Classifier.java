@@ -155,7 +155,7 @@ public class Classifier {
        for (Labels label: Labels.values()) {
 
            try {
-               File file = new File("dataset\\Label\\" + label + "\\" + label.toString().toLowerCase() + "Arrays.txt").getAbsoluteFile();
+               File file = new File("dataset/Label/" + label + "/" + label.toString().toLowerCase() + "Arrays.txt").getAbsoluteFile();
                FileReader fr = new FileReader(file);
                BufferedReader br = new BufferedReader(fr);
                String line;

@@ -8,8 +8,20 @@ import static com.datamining.text.StemText.stemText;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.TreeMap;
 
+
+/**
+ *   Processes the dataset to train the model and be able to execute future clasiffications
+ * */
 public class UpdateBaseText {
+
+    /**
+     * Operates per label
+     * It opens the files, applies the text processing steps and calculate frequencies of words with
+     * {@link com.datamining.classifier.Classifier#intoArrayList(TreeMap)}}
+     * Saves the result in a new array and adds it to the updated base text dataset
+     * */
     private static void train() {
         for (Labels label: Labels.values()) {
             File arraysFile;
@@ -48,6 +60,10 @@ public class UpdateBaseText {
         }
     }
 
+
+    /***
+     * Main method called when the training must be done
+     */
     public static void main(String[] args) {
         train();
     }

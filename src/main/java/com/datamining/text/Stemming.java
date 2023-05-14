@@ -1,5 +1,9 @@
 package com.datamining.text;
 
+/**
+ * Stemming algorithm to reduce words to their stems
+ **/
+
 public class Stemming {
     private static int wordLength;
     /**
@@ -29,10 +33,11 @@ public class Stemming {
         return stemmedWord.toLowerCase();
     }
 
-    /*
-        Stemming steps
-        Each word is applied many
-     */
+    /**
+     * Checks if the word ends in s, sses or ies
+     * @param word The word to evaluate by its ending
+     * @return A substring of the word with its ending removed
+     * */
     private static String step1a(String word) {
         if (word.endsWith("s")) {
             if (word.endsWith("sses")) wordLength -= 2;
@@ -47,6 +52,11 @@ public class Stemming {
         return word.substring(0, wordLength);
     }
 
+    /**
+     * Checks if the word edns with  eed, ed and ing and removes the ending if conditions are met
+     * @param word The word to evaluate by its ending
+     * @return A substring of the word with its ending removed
+     * */
     private static String step1b(String word) {
         if (word.endsWith("eed") && calculateM(word.substring(0, wordLength - 3)) > 0) {wordLength -= 1; word = word.substring(0, wordLength);}
         if (word.endsWith("ed") && containsVowel(word.substring(0, wordLength - 2))) {wordLength -= 2;  word = word.substring(0, wordLength); word = step1bExtension(word);}
@@ -54,6 +64,11 @@ public class Stemming {
         return word;
     }
 
+    /**
+     * Submethod used in the evaluation for {@link #step1b(String)} two and third conditions
+     * @param word The word to evaluate by its ending
+     * @return A substring of the words with its ending removed
+    * */
     private static String step1bExtension(String word) {
         if (word.endsWith("at") || word.endsWith("bl") || word.endsWith("iz")) {word = word.concat("e"); wordLength++;}
         else if (endsInDoubleConsonant(word)) {
@@ -63,11 +78,21 @@ public class Stemming {
         return word;
     }
 
+    /**
+     * Check if the word end in "y" and that its previous letter is a vowel
+     * @param word The word to evaluate for its ending
+     * @return a substring of the word with its ending removed
+     * */
     private static String step1c(String word) {
         if (word.endsWith("y") && containsVowel(word.substring(0, wordLength - 1))) word = word.substring(0, wordLength - 1) + 'i';
         return word;
     }
 
+    /**
+     * Check if the word has a specific ending and that its M measure is greater than 0
+     * @param word The word to evaluate for its ending
+     * @return a substring of the word with its ending removed
+     */
     private static String step2(String word) {
         if (word.endsWith("ational")) {
            if (calculateM(word.substring(0, wordLength - 7)) > 0) {
@@ -175,6 +200,11 @@ public class Stemming {
         return word;
     }
 
+    /**
+     * Check if the word has a specific ending and that its M measure is greater than 0
+     * @param word The word to evaluate for its ending
+     * @return a substring of the word with its ending removed
+     */
     private static String step3(String word) {
         if (word.endsWith("icate") && calculateM(word.substring(0, wordLength - 5)) > 0) word = word.substring(0, wordLength - 3);
         else if (word.endsWith("ative") && calculateM(word.substring(0, wordLength - 5)) > 0) word = word.substring(0, wordLength - 5);
@@ -187,6 +217,11 @@ public class Stemming {
         return word;
     }
 
+    /**
+     * Check if the word has a specific ending and that its M measure is greater than 0\1
+     * @param word The word to evaluate for its ending
+     * @return a substring of the word with its ending removed
+     */
     private static String step4(String word) {
         if (word.endsWith("al") && calculateM(word.substring(0, wordLength - 2)) > 1)
             word = word.substring(0, wordLength - 2);
@@ -220,6 +255,12 @@ public class Stemming {
         return word;
     }
 
+
+    /**
+     * Check if the word ends with "e" and that other conditions are met
+     * @param word The word to evaluate for its ending
+     * @return a substring of the word with its ending removed
+     */
     private static String step5a(String word) {
         if (word.endsWith("e")) {
             if (calculateM(word.substring(0, wordLength - 1)) > 1 || (calculateM(word.substring(0, wordLength - 1)) == 1 && !isO(word.substring(0, wordLength - 1)))) {
@@ -230,6 +271,12 @@ public class Stemming {
         return word;
     }
 
+
+    /**
+     * Check if the word ends with "l" and that other conditions are met
+     * @param word The word to evaluate for its ending
+     * @return a substring of the word with its ending removed
+     */
     private static String step5b(String word) {
         if (!word.endsWith("l") && endsInDoubleConsonant(word) && calculateM(word) > 1) {
             word = word.substring(0, wordLength - 1);
@@ -250,6 +297,11 @@ public class Stemming {
         return false;
     }
 
+    /**
+     * Check if a word contains a vowel
+     * @param word The word to evaluate
+     * @return true if there is at least a vowel the word
+     */
     private static boolean containsVowel(String word) {
         for(int i = 0; i < word.length(); i++){
             if(isVowel(word.charAt(i))) return true;
@@ -290,12 +342,22 @@ public class Stemming {
         return m;
     }
 
+    /**
+     * Calculate if the words end in a double consonant
+     * @param word The word to evaluate
+     * @return true if the word ends in double consonant
+     */
     private static boolean endsInDoubleConsonant(String word) {
         if (wordLength > 2)
             return !isVowel(word.charAt(word.length() - 1)) && word.charAt(word.length() - 1) == word.charAt(word.length() - 2);
         return false;
     }
 
+    /**
+     * Calculates, if an "y"  in a word should be considered as a consonant or a vowel
+     * @param word The word to evaluate
+     * @return a substring of the word with the "y" altered to "Y" in case it should be considered as a consonant
+     */
     private static String consonantY(String word) {
         if (word.charAt(0) == 'y') word = 'Y' + word.substring(1);
         for (int i = 1; i < word.length(); i++) {

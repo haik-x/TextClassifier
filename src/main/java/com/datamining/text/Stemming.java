@@ -37,7 +37,8 @@ public class Stemming {
      * Checks if the word ends in s, sses or ies
      * @param word The word to evaluate by its ending
      * @return A substring of the word with its ending removed
-     */
+     * */
+
     private static String step1a(String word) {
         if (word.endsWith("s")) {
             if (word.endsWith("sses")) wordLength -= 2;
@@ -82,7 +83,7 @@ public class Stemming {
      * Check if the word end in "y" and that its previous letter is a vowel
      * @param word The word to evaluate for its ending
      * @return a substring of the word with its ending removed
-     */
+     * */
     private static String step1c(String word) {
         if (word.endsWith("y") && containsVowel(word.substring(0, wordLength - 1))) word = word.substring(0, wordLength - 1) + 'i';
         return word;

@@ -9,7 +9,7 @@ import static com.datamining.text.HandlingPDF.extractPDFText;
 import static com.datamining.text.HandlingTXT.extractTXTText;
 
 /**
- *
+ * This Class contains the method to classify a text into one of th eavailable labels
  */
 public class Classifier {
     public final static int TEXTS_PER_LABEL = 10;

@@ -15,7 +15,7 @@ public class HandlingPDF {
 
     /**
      * Extract PDF text.
-     * @param path
+     * @param path path of the file
      * @return a String of the PDF text.
      */
 

@@ -14,7 +14,7 @@ public class HandlingTXT {
 
     /**
      * Extract txt text.
-     * @param path
+     * @param path path of the file
      * @return a String of the txt text.
      */
 

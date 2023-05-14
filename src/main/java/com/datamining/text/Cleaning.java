@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This class prepares the text errasing symbols, numbers and stop words and tokenasing the text.
+ */
 public class Cleaning {
 
     public static final String [] STOP_WORDS = {"a", "about", "above", "after", "again", "against", "all", "am", "an", "and", "any", "are",

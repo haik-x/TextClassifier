@@ -5,13 +5,30 @@ package com.datamining.classifier;
      */
 
 public class DistanceLabel implements Comparable<DistanceLabel> {
+    /**
+     * The representation of the distance between a base text and a user text.
+     */
     double distance;
+    /**
+     * The label of the base text which it´s distance was obteined.
+     */
     Labels label;
 
+    /**
+     * Constructor of the object Distance lable
+     * @param distance
+     * @param label
+     */
     public DistanceLabel(double distance, Labels label) {
         this.distance = distance;
         this.label = label;
     }
+
+        /**
+         * @Override equals so two DistanceLables were equals only if the distance are equals *
+         * @param obj
+         * @return
+         */
 
     @Override
     public boolean equals(Object obj) {
@@ -20,6 +37,12 @@ public class DistanceLabel implements Comparable<DistanceLabel> {
         }
         return false;
     }
+
+    /**
+     * @Override 'compareTo' function, compares distances and orders them from the smallest to the largest distance.
+     * @param dl the object to be compared.
+     * @return 0 if equals, 1 if this larger and -1 if this smaller.
+     */
 
     @Override
     public int compareTo(DistanceLabel dl) {

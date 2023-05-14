@@ -4,13 +4,23 @@ import org.apache.pdfbox.text.PDFTextStripper;
 
 import java.io.File;
 
+/**
+ *  This class extracts the text from a .pdf file and passes it into a String.
+ */
+
 public class HandlingPDF {
 
 
     public HandlingPDF(){}
 
-    public static String extractPDFText(String path){
+    /**
+     * Extract PDF text.
+     * @param path
+     * @return a String of the PDF text.
+     */
 
+    public static String extractPDFText(String path){
+        // null to avoid process continue without a text if no path find.
         String text = null;
 
         try{

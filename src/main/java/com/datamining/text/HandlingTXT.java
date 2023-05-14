@@ -7,8 +7,16 @@ import java.io.IOException;
 
 import java.util.Scanner;
 
-
+/**
+ * This class extracts the text from a .txt file and passes it into a String.
+ */
 public class HandlingTXT {
+
+    /**
+     * Extract txt text.
+     * @param path
+     * @return a String of the txt text.
+     */
 
     public static String extractTXTText(String path){
         StringBuilder data = new StringBuilder();

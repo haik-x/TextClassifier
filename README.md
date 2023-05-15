@@ -3,7 +3,7 @@
 
 TextClassifier is a tool to help users classify their text without having to read their content. 
 
-The API receives a text as an input and produces a label of the classification that the text corresponds to. 
+The API receives a text as an input and produces a label of the topic of the text as an output. 
 
 ## Installation
 
